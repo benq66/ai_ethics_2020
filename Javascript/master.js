@@ -1,21 +1,21 @@
 function Kid(hnd, cs, sib, sibCount, emp, vi, sp, im, district, age, priority, kindergartenList) {
     this.values ={};
-    if (hnd == true){
+    if (hnd === true){
         this.values.handicaped = 1;
     }
-    if (cs == true){
+    if (cs === true){
         this.values.childServices = 1;
     }
-    if (emp == true){
+    if (emp === true){
         this.values.childOfEmployed = 1;
     }
-    if (vi == true){
+    if (vi === true){
         this.values.childOfVisuallyImpared = 1;
     }
-    if (sp == true){
+    if (sp === true){
         this.values.singleParent = 1;
     }
-    if (im == true){
+    if (im === true){
         this.values.childOfImmigrants = 1;
     }
     this.siblingsKG = sib;
@@ -212,13 +212,8 @@ function calculatePriorityAllKindergartens(listOfKindergartens){
     }
 }
 
-
 function program(){
     let kindergartens = dummyKindergartens();
-//let k1 = new Kid(true, true, ["a","b","c"], 3, false, false, false, false, "Fana", 4, ["a", "b", "d", "h"]);
-//k1.getPriority();
-//k1.calculateScore();
-
     let kids = kidGenerator(250, kindergartens);
     getApplicants(kindergartens, kids);
     calculatePriorityAllKindergartens(kindergartens);
