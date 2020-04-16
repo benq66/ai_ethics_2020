@@ -1,4 +1,4 @@
-function Kid(hnd, cs, sib, sibCount, emp, vi, sp, im, district, age, priority) {
+function Kid(hnd, cs, sib, sibCount, emp, vi, sp, im, district, age, priority, kindergartenList) {
     this.values ={};
     if (hnd == true){
         this.values.handicaped = 1;
@@ -24,7 +24,7 @@ function Kid(hnd, cs, sib, sibCount, emp, vi, sp, im, district, age, priority) {
     this.age = age;
     this.priority_text = priority;
     this.priority = undefined;
-    this.getPriority = function () {getPriorityObjects(this, kindergartens)};
+    this.getPriority = function () {getPriorityObjects(this, kindergartenList)};
     this.calculateScore = function () {this.score = kidScore(this); return this.score};
     this.id = "kid_" + Math.random();
     this.report = function () {return report(this)}
@@ -51,7 +51,7 @@ function report(x) {
         report += "• Is a child of a single parent.\n"
     }
     if (x.values.childOfImmigrants){
-        report += "• Is a child of a immigrant.\n"
+        report += "• Is a child of immigrants.\n"
     }
     return report
 }
@@ -87,7 +87,6 @@ function kidScore(x) {
             }
         }
         scoreList.push(valueScore + districtScore + ageScore + siblingScore)
-
     }
     return scoreList
 }
@@ -127,14 +126,14 @@ function getUniquesFromList(list, arg) {
     return Array.from(new Set(di))
 }
 
-function kidGenerator(limit) {
+function kidGenerator(limit, kindergartenList) {
     let sample = [];
     let bool = [true, false];
-    let districts = getUniquesFromList(kindergartens, "district");
+    let districts = getUniquesFromList(kindergartenList, "district");
 
     for (let i = 0; i < limit ; i++) {
-        let priorities = getUniquesFromList(kindergartens, "name");
-        let length = priorities.length
+        let priorities = getUniquesFromList(kindergartenList, "name");
+        let length = priorities.length;
         sample.push(
             new Kid(
                 bool[randomInt(2)],
@@ -146,7 +145,7 @@ function kidGenerator(limit) {
                 bool[randomInt(2)],
                 bool[randomInt(2)],
                 districts[randomInt(districts.length)],
-                randomInt(6),[]
+                randomInt(6),[], kindergartenList
             ));
         for (let j = 0; j < length; j++) {
             let random = randomInt(priorities.length);
@@ -190,6 +189,7 @@ function calculatePriority(kindergarten){
             }
         }
     kindergarten.applicants.sort(function (a,b) {return a.tempScore - b.tempScore});
+
     /*
     for (let j = kindergarten.applicants.length - 1; j >= kindergarten.applicants.length - kindergarten.spots ; j--) {
         kindergarten.priority.push(kindergarten.applicants[j])
@@ -212,22 +212,18 @@ function calculatePriorityAllKindergartens(listOfKindergartens){
     }
 }
 
-let kindergartens = dummyKindergartens();
+
+function program(){
+    let kindergartens = dummyKindergartens();
 //let k1 = new Kid(true, true, ["a","b","c"], 3, false, false, false, false, "Fana", 4, ["a", "b", "d", "h"]);
 //k1.getPriority();
 //k1.calculateScore();
 
-let kids = kidGenerator(250);
-console.log(kids);
-
-getApplicants(kindergartens, kids);
-console.log(kindergartens);
-calculatePriorityAllKindergartens(kindergartens);
-//print(kindergartens[0]);
-//console.log(kindergartens[0].applicants[0]);
-
-
-
-
-
-
+    let kids = kidGenerator(250, kindergartens);
+    getApplicants(kindergartens, kids);
+    calculatePriorityAllKindergartens(kindergartens);
+    return [kids, kindergartens]
+}
+let collection = program();
+let kids = collection[0];
+let kindergartens = collection[1];
