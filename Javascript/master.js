@@ -98,6 +98,7 @@ function Kindergarten(name, id, district, spots) {
     this.spots = spots;
     this.priority = [];
     this.applicants = [];
+    this.spotCollection = {};
 }
 
 function dummyKindergartens() {
@@ -114,7 +115,7 @@ function dummyKindergartens() {
 }
 
 function waitingList(rest) {
-return new Kindergarten("wainting_list", "0000", "", rest)
+return new Kindergarten("waiting_list", "0000", "", rest)
 }
 
 function randomInt(max) {
@@ -222,12 +223,29 @@ function calculateWaitingListSize(kindergartenList, kidList) {
     return kidList.length - sum
 }
 
+function createSpots(kindergarten) {
+    for (let i = 0; i < kindergarten.spots ; i++) {
+        kindergarten.spotCollection["spot_" + i] = kindergarten.priority
+    }
+}
+
+function createSpotsAll(kindergartenList) {
+    for (let k in kindergartenList){
+        createSpots(kindergartenList[k])
+    }
+}
+
+function prepWaitingList(kindergartens, kids) {
+    let waiting = waitingList(calculateWaitingListSize(kindergartens, kids))
+    waiting.applicants = kids;
+    waiting.priority = kids;
+    return waiting
+}
 function program(){
     let kindergartens = dummyKindergartens();
     let kids = kidGenerator(250, kindergartens);
-    let waiting = waitingList(calculateWaitingListSize(kindergartens, kids))
-
-
+    let waiting = prepWaitingList(kindergartens, kids)
+    console.log(waiting)
     getApplicants(kindergartens, kids);
     calculatePriorityAllKindergartens(kindergartens);
     return [kids, kindergartens]
