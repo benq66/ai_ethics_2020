@@ -73,7 +73,7 @@ function kidScore(x) {
     for (let u in x.priority){
         let valueScore = 0;
         let districtScore = 0;
-        let ageScore = x.age; //find a better way to give agePoints
+        let ageScore = x.age; //TODO: Find a way to calculate age points based on birth date.
         let siblingScore = 0;
         for (let v in x.values){
             valueScore += x.values[v];
@@ -97,7 +97,6 @@ function Kindergarten(name, id, district, spots) {
     this.district = district;
     this.spots = spots;
     this.priority = [];
-    this.caluculatePriority = function () {};
     this.applicants = [];
 }
 
