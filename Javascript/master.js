@@ -58,8 +58,8 @@ function report(x) {
 
 function getPriorityObjects(x, kgList) {
     let priorityObjects = [];
-    for (y in x.priority_text){
-        for (z in kgList){
+    for (let y in x.priority_text){
+        for (let z in kgList){
             if (x.priority_text[y] === kgList[z].name){
                 priorityObjects.push(kgList[z])
             }
