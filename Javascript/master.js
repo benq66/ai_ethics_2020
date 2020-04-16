@@ -113,6 +113,10 @@ function dummyKindergartens() {
     return [a,b,c,d,e,f,g,h,i]
 }
 
+function waitingList(rest) {
+return new Kindergarten("wainting_list", "0000", "", rest)
+}
+
 function randomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
 }
@@ -210,10 +214,20 @@ function calculatePriorityAllKindergartens(listOfKindergartens){
         calculatePriority(listOfKindergartens[kindergarten])
     }
 }
+function calculateWaitingListSize(kindergartenList, kidList) {
+    let sum = 0
+    for (let garden in kindergartenList){
+        sum += kindergartenList[garden].spots
+    }
+    return kidList.length - sum
+}
 
 function program(){
     let kindergartens = dummyKindergartens();
     let kids = kidGenerator(250, kindergartens);
+    let waiting = waitingList(calculateWaitingListSize(kindergartens, kids))
+
+
     getApplicants(kindergartens, kids);
     calculatePriorityAllKindergartens(kindergartens);
     return [kids, kindergartens]
