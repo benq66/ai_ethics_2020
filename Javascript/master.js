@@ -24,6 +24,7 @@ function Kid(hnd, cs, sib, sibCount, emp, vi, sp, im, district, age, priority, k
     this.age = age;
     this.priority_text = priority;
     this.priority = undefined;
+    this.fullPriorityList = [];
     this.getPriority = function () {getPriorityObjects(this, kindergartenList)};
     this.calculateScore = function () {this.score = kidScore(this); return this.score};
     this.id = "kid_" + Math.random();
@@ -99,6 +100,7 @@ function Kindergarten(name, id, district, spots) {
     this.priority = [];
     this.applicants = [];
     this.spotCollection = {};
+    this.spotCollection_text = []
 }
 
 function dummyKindergartens() {
@@ -225,7 +227,8 @@ function calculateWaitingListSize(kindergartenList, kidList) {
 
 function createSpots(kindergarten) {
     for (let i = 0; i < kindergarten.spots ; i++) {
-        kindergarten.spotCollection["spot_" + i] = kindergarten.priority
+        kindergarten.spotCollection[kindergarten["id"] + "spot_" + i] = kindergarten.priority
+        kindergarten.spotCollection_text.push(kindergarten["id"] + "spot_" + i)
     }
 }
 
@@ -239,15 +242,33 @@ function prepWaitingList(kindergartens, kids) {
     let waiting = waitingList(calculateWaitingListSize(kindergartens, kids))
     waiting.applicants = kids;
     waiting.priority = kids;
+    createSpots(waiting)
     return waiting
 }
+
+function createFullPriorityListKids(kid, waitingList) {
+    let list = []
+    for (let i in kid.priority){
+        list = list.concat(kid.priority[i].spotCollection_text)
+    }
+    list = list.concat(waitingList.spotCollection_text)
+    kid.fullPriorityList = list;
+}
+
+function createFullPriorityListKidsALL(kidList, waitingList) {
+    for (let kids in kidList) {
+        createFullPriorityListKids(kidList[kids], waitingList)
+    }
+}
+
 function program(){
     let kindergartens = dummyKindergartens();
+    createSpotsAll(kindergartens)
     let kids = kidGenerator(250, kindergartens);
     let waiting = prepWaitingList(kindergartens, kids)
-    console.log(waiting)
     getApplicants(kindergartens, kids);
     calculatePriorityAllKindergartens(kindergartens);
+    createFullPriorityListKidsALL(kids, waiting)
     return [kids, kindergartens]
 }
 let collection = program();
