@@ -371,16 +371,3 @@ function checkList(list, priority) {
 }
 
 //stableMatching(freeKids, kindergartens)
-
-function logAllIds(list) {
-    for (let u in list) {
-        console.log(list[u].id)
-    }
-}
-
-function checkBothLists(id, list1, list2) {
-    let a = findKidById(id, list1)
-    let b = findKidById(id, list2)
-    console.log(a,b)
-    return a || b
-}
