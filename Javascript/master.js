@@ -288,6 +288,7 @@ let waiting = collection[2];
 let freeKids = kids;
 let tentativeMatch = [];
 let removed = [];
+let results;
 
 function stableMatching(freeKidsList, kindergartenList) {
     while (freeKidsList.length > 0) {
@@ -296,12 +297,12 @@ function stableMatching(freeKidsList, kindergartenList) {
         }
     }
     kindergartens.push(waiting)
-    let results = enrichResults(tentativeMatch)
-    console.log(results)
+    results = enrichResults(tentativeMatch)
+    resultsToHTML(kindergartens)
 }
 
 function beginMatch(kid, kindergartenList) {
-    console.log("dealing with " + kid.id)
+    //console.log("dealing with " + kid.id)
     for (let p = 0; p < kid.fullPriorityList.length; p++) {
         let exists = checkList(tentativeMatch, kid.fullPriorityList[p])
         if (exists === false){
@@ -325,20 +326,11 @@ function beginMatch(kid, kindergartenList) {
                 let z = freeKids.splice(ix,1);
                 removed.push(z[0])
 
-                //let remove_id = getIdOFKidTakingSpot(kid.fullPriorityList[p], tentativeMatch)
-                //let abc = getIndexOfKidTakingSpot(remove_id, tentativeMatch)
-                //let iii = tentativeMatch.indexOf(abc)
-                //tentativeMatch.splice(iii,1);
-
                 let qwe = tentativeMatch.indexOf(exists)
                 tentativeMatch.splice(qwe, 1)
 
                 tentativeMatch.push([kid.id, kid.fullPriorityList[p]])
 
-
-
-                //let addBack = checkBothLists(remove_id, freeKids, removed)
-                //replaceKidTakingSpot(kid.fullPriorityList[p],tentativeMatch,kid.id)
                 let addBack = findKidById(exists[0], removed)
                 let inRemovedList = removed.indexOf(addBack)
                 removed.splice(inRemovedList, 1)
@@ -347,7 +339,6 @@ function beginMatch(kid, kindergartenList) {
             }
         }
     }
-
 }
 
 function findKindergarten(id, kindergartenList) {
@@ -366,8 +357,8 @@ function findKindergartenBySpot(spot, kindergartenList) {
             if (spot === kindergartenList[name].spotCollection_text[kid]){
                 return kindergartenList[name]
             }
+        }
     }
-}
 }
 
 function findKidById(id,kidList) {
@@ -387,9 +378,6 @@ function checkList(list, priority) {
     return false
 }
 
-//stableMatching(freeKids, kindergartens)
-
-
 function enrichResults(resultList) {
     let temp = []
     for (let kid = 0; kid < resultList.length; kid++){
@@ -404,4 +392,48 @@ function enrichResults(resultList) {
         temp.push([a,b])
     }
     return temp
+}
+
+function resultsToHTML(kindergartenList) {
+    let placement = document.getElementById("main");
+
+    for (let i = 0; i < kindergartenList.length ; i++) {
+        let div = document.createElement("DIV");
+        let h2 = document.createElement("h2");
+        let name = document.createTextNode(kindergartenList[i].name)
+        let ul = document.createElement("UL");
+
+        for (let kid in kindergartenList[i].results){
+            let x = kindergartenList[i].results[kid]
+            let span = document.createElement("SPAN")
+            let li = document.createElement("LI");
+            let text = document.createTextNode(
+                ". Top 3 priority: "
+                + x.priority_text[0] + ", "
+                + x.priority_text[1] + ", "
+                + x.priority_text[2]);
+            let text2 = document.createTextNode("Id: ")
+            let text3 = document.createTextNode(x.id)
+            li.appendChild(text2)
+            span.appendChild(text3)
+            li.appendChild(span)
+            li.appendChild(text)
+            ul.appendChild(li)
+        }
+        h2.appendChild(name);
+        div.appendChild(h2)
+        div.appendChild(ul)
+        placement.appendChild(div)
+    }
+}
+
+function findAndHide(id) {
+    let element = document.getElementById(id)
+    console.log(element)
+    element.style.display = "none";
+}
+
+function start() {
+findAndHide("onlyButton");
+stableMatching(freeKids,kindergartens)
 }
