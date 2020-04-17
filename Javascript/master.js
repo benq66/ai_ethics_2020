@@ -353,30 +353,6 @@ function findKindergarten(id, kindergartenList) {
     }
 }
 
-function getIdOFKidTakingSpot(spot, list) {
-    for (let y in list){
-        if (spot == list[y][1]){
-            return list[y][0]
-        }
-    }
-}
-
-function getIndexOfKidTakingSpot(id, list) {
-    for (let y in list){
-        if (id == list[y][0]){
-            return list[y]
-        }
-    }
-}
-
-function replaceKidTakingSpot(spot, list, newId) {
-    for (let y in list){
-        if (spot == list[y][1]){
-            list[y][0] = newId
-        }
-    }
-}
-
 function findKidById(id,kidList) {
     for (let kid in kidList){
         if (id === kidList[kid].id){
