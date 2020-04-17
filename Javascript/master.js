@@ -281,48 +281,66 @@ let kindergartens = collection[1];
 
 let freeKids = kids;
 let tentativeMatch = [];
+let removed = [];
 
 function stableMatching(freeKidsList, kindergartenList) {
-    while (freeKids.length > 0){
+    while (freeKidsList.length > 0) {
         for (let k in freeKidsList) {
             beginMatch(freeKidsList[k], kindergartenList)
         }
+        print(tentativeMatch)
     }
-    print(tentativeMatch)
 }
 
 function beginMatch(kid, kindergartenList) {
-    console.log("dealing with" + kid.id)
-    for (let p in kid.fullPriorityList) {
+    let tempRemoved = []
+    console.log("dealing with " + kid.id)
+    for (let p = 0; p < kid.fullPriorityList.length; p++) {
         let exists = checkList(tentativeMatch, kid.fullPriorityList[p])
-        if (exists == false){
-            tentativeMatch.push([kid.id, kid.fullPriorityList[p]])
+        if (exists === false){
+            //removed.push(freeKids.splice(freeKids.indexOf(kid),1)[0])
+
             let index = freeKids.indexOf(kid)
             let y = freeKids.splice(index,1);
-            console.log(y)
+            removed.push(y[0])
+
+            tentativeMatch.push([kid.id, kid.fullPriorityList[p]])
             console.log(kid.id + " now has a temporary kindergarten spot: " + kid.fullPriorityList[p] + ".")
             break
         }
         if (exists){
             console.log(kid.fullPriorityList[p] + " is taken.")
-            let currentKid = findKindergarten(getIdOFKidTakingSpot(kid.fullPriorityList[p], tentativeMatch), kindergartenList)
+            let currentKid = findKindergarten(exists[0], kindergartenList)
             let thisKid = findKindergarten(kid.id, kindergartenList)
 
             if (currentKid > thisKid){
-                let iii = freeKids.indexOf(getIdOFKidTakingSpot(kid.fullPriorityList[p], tentativeMatch))
-                freeKids.splice(iii,1);
-                replaceKidTakingSpot(kid.fullPriorityList[p],tentativeMatch,kid.id)
-                let remove_id = getIdOFKidTakingSpot(kid.fullPriorityList[p], tentativeMatch)
-                console.log(remove_id)
+                let ix = freeKids.indexOf(kid)
+                let z = freeKids.splice(ix,1);
+                removed.push(z[0])
 
-                let kid_to_be_removed = findKidById(remove_id, kids)
-                console.log(kid_to_be_removed)
-                //freeKids.push(kid_to_be_removed) //TODO: Problemet ligger her!!!!!!!!!!!!
+                //let remove_id = getIdOFKidTakingSpot(kid.fullPriorityList[p], tentativeMatch)
+                //let abc = getIndexOfKidTakingSpot(remove_id, tentativeMatch)
+                //let iii = tentativeMatch.indexOf(abc)
+                //tentativeMatch.splice(iii,1);
+
+                let qwe = tentativeMatch.indexOf(exists)
+                tentativeMatch.splice(qwe, 1)
+
+                tentativeMatch.push([kid.id, kid.fullPriorityList[p]])
+
+
+
+                //let addBack = checkBothLists(remove_id, freeKids, removed)
+                //replaceKidTakingSpot(kid.fullPriorityList[p],tentativeMatch,kid.id)
+                let addBack = findKidById(exists[0], removed)
+                let inRemovedList = removed.indexOf(addBack)
+                removed.splice(inRemovedList, 1)
+                freeKids.push(addBack)
                 break
             }
         }
-        console.log(freeKids)
     }
+
 }
 
 function findKindergarten(id, kindergartenList) {
@@ -337,15 +355,23 @@ function findKindergarten(id, kindergartenList) {
 
 function getIdOFKidTakingSpot(spot, list) {
     for (let y in list){
-        if (spot === list[y][1]){
+        if (spot == list[y][1]){
             return list[y][0]
+        }
+    }
+}
+
+function getIndexOfKidTakingSpot(id, list) {
+    for (let y in list){
+        if (id == list[y][0]){
+            return list[y]
         }
     }
 }
 
 function replaceKidTakingSpot(spot, list, newId) {
     for (let y in list){
-        if (spot === list[y][1]){
+        if (spot == list[y][1]){
             list[y][0] = newId
         }
     }
@@ -353,8 +379,9 @@ function replaceKidTakingSpot(spot, list, newId) {
 
 function findKidById(id,kidList) {
     for (let kid in kidList){
-        console.log(kidList[kid])
-
+        if (id === kidList[kid].id){
+            return kidList[kid]
+        }
     }
 }
 
@@ -373,4 +400,11 @@ function logAllIds(list) {
     for (let u in list) {
         console.log(list[u].id)
     }
+}
+
+function checkBothLists(id, list1, list2) {
+    let a = findKidById(id, list1)
+    let b = findKidById(id, list2)
+    console.log(a,b)
+    return a || b
 }
