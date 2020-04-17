@@ -1,0 +1,96 @@
+html{
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    color: black;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+}
+
+h2{
+    text-align: center;
+    margin: 1%;
+}
+
+#main {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+#main div {
+    display: flex;
+    flex-direction: column;
+}
+
+
+html::-webkit-scrollbar {
+    display: none;
+}
+
+html{
+    min-height: 100%;
+    background-image: linear-gradient(to bottom, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+}
+
+
+ul {
+    list-style-type: none;
+}
+
+span{
+    background-image: linear-gradient(to right,  #FF6F91, #FF9671);
+    padding: 2px;
+}
+
+button{
+    font-family: 'Roboto', sans-serif;
+    padding: 12px 20px;
+    border: none;
+    box-sizing: border-box;
+    color: white;
+    font-size: 20px;
+    background-image: linear-gradient(to bottom,  #9a9ae1, #8aa7ec);
+}
+.wrapper {
+    text-align: center;
+}
+
+.button {
+    position: absolute;
+    top: 50%;
+}
+
+button:hover{
+    background-image: linear-gradient(to top,  #9a9ae1, #8aa7ec);
+}
+
+span{
+    background-image: linear-gradient(to right,  #FF6F91, #FF9671);
+    padding: 2px;
+}
+
+@media only screen and (max-width: 700px) {
+    html {
+        font-family: 'Roboto', sans-serif;
+        overflow-y: scroll;
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        color: white;
+
+    }
+}
+
+
+
+
+
+/* NOTE:
+#845EC2
+#D65DB1
+#FF6F91
+#FF9671
+#FFC75F
+#F9F871 */
+
+/* NOTE: gradient generert på denne siden: https://mycolor.space/gradient */
