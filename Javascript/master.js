@@ -29,6 +29,8 @@ function Kid(hnd, cs, sib, sibCount, emp, vi, sp, im, district, age, priority, k
     this.calculateScore = function () {this.score = kidScore(this); return this.score};
     this.id = "kid_" + id_tall;
     this.report = function () {return report(this)}
+    this.spot = "";
+    this.kindergarten = undefined;
 }
 
 function report(x) {
@@ -101,7 +103,8 @@ function Kindergarten(name, id, district, spots) {
     this.priority_text = [];
     this.applicants = [];
     this.spotCollection = {};
-    this.spotCollection_text = []
+    this.spotCollection_text = [];
+    this.results = {};
 }
 
 function dummyKindergartens() {
@@ -219,6 +222,7 @@ function calculatePriorityAllKindergartens(listOfKindergartens){
         calculatePriority(listOfKindergartens[kindergarten])
     }
 }
+
 function calculateWaitingListSize(kindergartenList, kidList) {
     let sum = 0
     for (let garden in kindergartenList){
@@ -271,11 +275,13 @@ function program(){
     getApplicants(kindergartens, kids);
     calculatePriorityAllKindergartens(kindergartens);
     createFullPriorityListKidsALL(kids, waiting)
-    return [kids, kindergartens]
+    return [kids, kindergartens, waiting]
 }
+
 let collection = program();
 const kids = collection[0];
 let kindergartens = collection[1];
+let waiting = collection[2];
 
 /*-------------------------------------------------MATCHING ALGORITHM-------------------------------------------------*/
 
@@ -288,12 +294,13 @@ function stableMatching(freeKidsList, kindergartenList) {
         for (let k in freeKidsList) {
             beginMatch(freeKidsList[k], kindergartenList)
         }
-        print(tentativeMatch)
     }
+    kindergartens.push(waiting)
+    let results = enrichResults(tentativeMatch)
+    console.log(results)
 }
 
 function beginMatch(kid, kindergartenList) {
-    let tempRemoved = []
     console.log("dealing with " + kid.id)
     for (let p = 0; p < kid.fullPriorityList.length; p++) {
         let exists = checkList(tentativeMatch, kid.fullPriorityList[p])
@@ -309,7 +316,7 @@ function beginMatch(kid, kindergartenList) {
             break
         }
         if (exists){
-            console.log(kid.fullPriorityList[p] + " is taken.")
+            //console.log(kid.fullPriorityList[p] + " is taken.")
             let currentKid = findKindergarten(exists[0], kindergartenList)
             let thisKid = findKindergarten(kid.id, kindergartenList)
 
@@ -353,6 +360,16 @@ function findKindergarten(id, kindergartenList) {
     }
 }
 
+function findKindergartenBySpot(spot, kindergartenList) {
+    for (let name in kindergartenList) {
+        for (let kid in kindergartenList[name].spotCollection_text){
+            if (spot === kindergartenList[name].spotCollection_text[kid]){
+                return kindergartenList[name]
+            }
+    }
+}
+}
+
 function findKidById(id,kidList) {
     for (let kid in kidList){
         if (id === kidList[kid].id){
@@ -363,7 +380,7 @@ function findKidById(id,kidList) {
 
 function checkList(list, priority) {
     for (let i in list){
-        if (list[i][1] == priority){
+        if (list[i][1] === priority){
             return list[i]
         }
     }
@@ -371,3 +388,20 @@ function checkList(list, priority) {
 }
 
 //stableMatching(freeKids, kindergartens)
+
+
+function enrichResults(resultList) {
+    let temp = []
+    for (let kid = 0; kid < resultList.length; kid++){
+
+        let a = findKidById(resultList[kid][0],removed);
+        let b = findKindergartenBySpot(resultList[kid][1], kindergartens)
+
+        a.spot = resultList[kid][1]
+        a.kindergarten = b;
+        b.results[resultList[kid][1]] = a;
+
+        temp.push([a,b])
+    }
+    return temp
+}
