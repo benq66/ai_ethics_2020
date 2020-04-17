@@ -2,14 +2,15 @@ html{
     overflow-y: scroll;
     display: flex;
     flex-direction: column;
-    color: black;
     font-family: 'Roboto', sans-serif;
     font-size: 20px;
+    color: white;
 }
 
 h2{
     text-align: center;
     margin: 1%;
+    color: #FF9671;
 }
 
 #main {
