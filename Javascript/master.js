@@ -121,7 +121,7 @@ function dummyKindergartens() {
 }
 
 function waitingList(rest) {
-return new Kindergarten("waiting_list", "0000", "", rest)
+    return new Kindergarten("waiting_list", "0000", "", rest)
 }
 
 function randomInt(max) {
@@ -200,20 +200,9 @@ function calculatePriority(kindergarten){
         }
     kindergarten.applicants.sort(function (a,b) {return a.tempScore - b.tempScore});
 
-    /*
-    for (let j = kindergarten.applicants.length - 1; j >= kindergarten.applicants.length - kindergarten.spots ; j--) {
-        kindergarten.priority.push(kindergarten.applicants[j])
-    }*/
-
     for (let j = kindergarten.applicants.length - 1; j >= 0 ; j--) {
         kindergarten.priority.push(kindergarten.applicants[j])
         kindergarten.priority_text.push(kindergarten.applicants[j].id)
-    }
-}
-
-function print(arg) {
-    for (let tall in arg.applicants){
-        console.log(arg.applicants[tall].tempScore)
     }
 }
 
@@ -306,8 +295,6 @@ function beginMatch(kid, kindergartenList) {
     for (let p = 0; p < kid.fullPriorityList.length; p++) {
         let exists = checkList(tentativeMatch, kid.fullPriorityList[p])
         if (exists === false){
-            //removed.push(freeKids.splice(freeKids.indexOf(kid),1)[0])
-
             let index = freeKids.indexOf(kid)
             let y = freeKids.splice(index,1);
             removed.push(y[0])
@@ -434,6 +421,6 @@ function findAndHide(id) {
 }
 
 function start() {
-findAndHide("onlyButton");
-stableMatching(freeKids,kindergartens)
+    findAndHide("onlyButton");
+    stableMatching(freeKids,kindergartens)
 }
