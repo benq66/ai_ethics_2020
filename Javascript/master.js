@@ -148,6 +148,10 @@ function Kindergarten(name, id, district, spots) {
     this.results = {};
 }
 
+/**
+ * Generates a number of kindergartens and puts them in a list (array).
+ * @returns {Kindergarten[]} list of kindergarten - Returns a list of the created kindergartens.
+ */
 function dummyKindergartens() {
     let a = new Kindergarten("a", "0101", "Åsane", 20);
     let b = new Kindergarten("b", "0102", "Arna", 40);
@@ -161,22 +165,21 @@ function dummyKindergartens() {
     return [a,b,c,d,e,f,g,h,i]
 }
 
+/**
+ * Generates a waiting list, where excess children are put.
+ * @param rest {number} remaining children - The number of excess children
+ * @returns {Kindergarten} kindergarten - Returns a Kindergarten object that is the waiting list.
+ */
 function waitingList(rest) {
     return new Kindergarten("waiting_list", "0000", "", rest)
 }
 
-function randomInt(max) {
-    return Math.floor(Math.random() * Math.floor(max));
-}
-
-function getUniquesFromList(list, arg) {
-    let di = [];
-    for (let y in list){
-        di.push(list[y][arg])
-    }
-    return Array.from(new Set(di))
-}
-
+/**
+ * Generates a number of Kid object with random values.
+ * @param limit {number} number of kids - The number of kids that should be generated.
+ * @param kindergartenList {Array} the list of kindergartens.
+ * @returns {[]} list of all kids - Returns a list of all the kids that is generated.
+ */
 function kidGenerator(limit, kindergartenList) {
     let sample = [];
     let bool = [true, false];
@@ -214,6 +217,38 @@ function kidGenerator(limit, kindergartenList) {
     return sample
 }
 
+/*--------------------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------HELP FUNCTIONS---------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------*/
+
+/**
+ * Generates a random number, from 0 - max.
+ * @param max {number} highest number - The highest to be generated.
+ * @returns {number} random number - Returns a random number.
+ */
+function randomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+}
+
+/**
+ * Function that returns unique values from a list. Used in the generation of dummy kids.
+ * @param list {Array} list - The list where the unique values are gathered form.
+ * @param arg {string} property - The property name from the kid object, that the unique values will be gathered from.
+ * @returns {*[]} Array - Returns a list of unique values.
+ */
+function getUniquesFromList(list, arg) {
+    let di = [];
+    for (let y in list){
+        di.push(list[y][arg])
+    }
+    return Array.from(new Set(di))
+}
+
+/**
+ *
+ * @param kindergarten
+ * @param kids
+ */
 function calculateApplicantsKindergarten(kindergarten, kids){
     for (let kid in kids){
         for (let p in kids[kid].priority){
@@ -308,12 +343,18 @@ function program(){
     return [kids, kindergartens, waiting]
 }
 
+/*--------------------------------------------------------------------------------------------------------------------*/
+/*------------------------------------------------PROGRAM PREPARATION-------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------*/
+
 let collection = program();
 const kids = collection[0];
 let kindergartens = collection[1];
 let waiting = collection[2];
 
+/*--------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------MATCHING ALGORITHM-------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------*/
 
 let freeKids = kids;
 let tentativeMatch = [];
@@ -461,7 +502,15 @@ function findAndHide(id) {
     element.style.display = "none";
 }
 
+/*--------------------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------PROGRAM START----------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------*/
+
 function start() {
     findAndHide("onlyButton");
     stableMatching(freeKids,kindergartens)
 }
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------END---------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------*/
