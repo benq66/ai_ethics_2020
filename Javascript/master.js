@@ -1,3 +1,20 @@
+/**
+ * Represents a kid.
+ * @param hnd {boolean} handicap - If the child has a disability.
+ * @param cs {boolean} child services - If the child is involved with the child services.
+ * @param sib {array}  kindergarten of siblings - An array containing the names of the kindergartens where this child has siblings.
+ * @param sibCount {number} siblings - Numbers of siblings.
+ * @param emp {boolean} child of employed - If the child is the child of an employed in the kindergarten.
+ * @param vi {boolean} visually impaired - If the child is the child of a visually impaired parent.
+ * @param sp {boolean} single parent - If the child is the child of a single parent.
+ * @param im {boolean} immigrant parents - If the child is the child of immigrants (both parents, non english speaking countries).
+ * @param district {string} district - The district where the child lives.
+ * @param age {number} age - The age of the child.
+ * @param priority {array} prioritized list - A list of the kindergartens the child applies to, ordered by priority.
+ * @param kindergartenList {array} list of kindergartens - The list of all kindergartens.
+ * @param id_tall {number} id - A number which becomes the unique id of the child in this system.
+ * @constructor
+ */
 function Kid(hnd, cs, sib, sibCount, emp, vi, sp, im, district, age, priority, kindergartenList, id_tall) {
     this.values ={};
     if (hnd === true){
@@ -33,6 +50,11 @@ function Kid(hnd, cs, sib, sibCount, emp, vi, sp, im, district, age, priority, k
     this.kindergarten = undefined;
 }
 
+/**
+ * Represents a report for a child, summarizing all its key information.
+ * @param x {Kid} kid object - Object representing a child.
+ * @returns {string} report - String representing a report for the child.
+ */
 function report(x) {
     let report = "Report (" + x.id + "):\n";
     if (x.values.handicaped){
@@ -59,6 +81,11 @@ function report(x) {
     return report
 }
 
+/**
+ * Finds kindergarten objects by their name, adds these to the priority property of the kid object.
+ * @param x {Kid} kid object - Object representing a child.
+ * @param kgList {Array} kindergarten list - A list of all the kindergartens.
+ */
 function getPriorityObjects(x, kgList) {
     let priorityObjects = [];
     for (let y in x.priority_text){
@@ -71,6 +98,11 @@ function getPriorityObjects(x, kgList) {
     x.priority = priorityObjects
 }
 
+/**
+ * Calculates the score for each kid, that is used by the kindergartens to prioritize which children they want.
+ * @param x {Kid} kid object - Object representing a child.
+ * @returns {[]} score list - Returns a list of all the scores.
+ */
 function kidScore(x) {
     let scoreList = [];
     for (let u in x.priority){
@@ -78,6 +110,7 @@ function kidScore(x) {
         let districtScore = 0;
         let ageScore = x.age; //TODO: Find a way to calculate age points based on birth date.
         let siblingScore = 0;
+        //TODO: remove "child of employed" from valueScore and calculate this for each kindergarten like the siblingsScore.
         for (let v in x.values){
             valueScore += x.values[v];
         }
@@ -94,6 +127,14 @@ function kidScore(x) {
     return scoreList
 }
 
+/**
+ * Represents a kindergarten.
+ * @param name {string} name - Name of the kindergarten.
+ * @param id {string} id - Id of the kindergarten, needs to be unique.
+ * @param district {string} district - The district where the kindergarten is.
+ * @param spots {number} kindergarten spots - The number of open spots in the kindergarten.
+ * @constructor
+ */
 function Kindergarten(name, id, district, spots) {
     this.name = name;
     this.id = id;
