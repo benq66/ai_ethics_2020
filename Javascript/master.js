@@ -332,6 +332,10 @@ function createFullPriorityListKidsALL(kidList, waitingList) {
     }
 }
 
+/*--------------------------------------------------------------------------------------------------------------------*/
+/*------------------------------------------------PROGRAM PREPARATION-------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------*/
+
 function program(){
     let kindergartens = dummyKindergartens();
     createSpotsAll(kindergartens)
@@ -343,23 +347,20 @@ function program(){
     return [kids, kindergartens, waiting]
 }
 
-/*--------------------------------------------------------------------------------------------------------------------*/
-/*------------------------------------------------PROGRAM PREPARATION-------------------------------------------------*/
-/*--------------------------------------------------------------------------------------------------------------------*/
-
 let collection = program();
-const kids = collection[0];
-let kindergartens = collection[1];
-let waiting = collection[2];
+const kids = collection[0]; // List containing all Kid objects.
+let kindergartens = collection[1]; // List containing all Kindergarten objects.
+let waiting = collection[2]; // The waiting list Kindergarten object.
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------MATCHING ALGORITHM-------------------------------------------------*/
 /*--------------------------------------------------------------------------------------------------------------------*/
 
-let freeKids = kids;
-let tentativeMatch = [];
-let removed = [];
-let results;
+let freeKids = kids; // Duplicate of list containing all Kid objects.
+let tentativeMatch = []; // List of all the matches text (when program is finished).
+let removed = []; // List of all Kid objects after the program is finished.
+let results; // List of all the matches as objects.
+
 
 function stableMatching(freeKidsList, kindergartenList) {
     while (freeKidsList.length > 0) {
