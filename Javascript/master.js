@@ -408,7 +408,11 @@ let tentativeMatch = []; // List of all the matches text (when program is finish
 let removed = []; // List of all Kid objects after the program is finished.
 let results; // List of all the matches as objects.
 
-
+/**
+ * Matches ALL Kids with Kindergarten spots.
+ * @param freeKidsList {Array} list of all Kid objects.
+ * @param kindergartenList {Array} list of all Kindergarten objects.
+ */
 function stableMatching(freeKidsList, kindergartenList) {
     while (freeKidsList.length > 0) {
         for (let k in freeKidsList) {
@@ -420,6 +424,11 @@ function stableMatching(freeKidsList, kindergartenList) {
     resultsToHTML(kindergartens)
 }
 
+/**
+ * The stable match algorithm function. Matches a kid with a kindergarten spot.
+ * @param kid {Kid} Kid object.
+ * @param kindergartenList {Array} list of all kindergartens.
+ */
 function beginMatch(kid, kindergartenList) {
     //console.log("dealing with " + kid.id)
     for (let p = 0; p < kid.fullPriorityList.length; p++) {
@@ -458,6 +467,12 @@ function beginMatch(kid, kindergartenList) {
     }
 }
 
+/**
+ * Finds the index of i Kid from a Kindergartens prioritized list based on a Kid's id property.
+ * @param id {string} id of a Kid object.
+ * @param kindergartenList {Array} list of all kindergartens.
+ * @returns {number}
+ */
 function findKindergarten(id, kindergartenList) {
     for (let garden in kindergartenList) {
         for (let kid in kindergartenList[garden].priority_text){
@@ -468,6 +483,12 @@ function findKindergarten(id, kindergartenList) {
     }
 }
 
+/**
+ * Finds a Kindergarten object based on a name of a kindergarten spot. (this name consists of a kindergartens id + "spot" + number)
+ * @param spot {string} name of kindergarten spot.
+ * @param kindergartenList {Array} list of all kindergartens.
+ * @returns {Kindergarten} kindergarten object that has the kindergarten spot.
+ */
 function findKindergartenBySpot(spot, kindergartenList) {
     for (let name in kindergartenList) {
         for (let kid in kindergartenList[name].spotCollection_text){
@@ -478,6 +499,12 @@ function findKindergartenBySpot(spot, kindergartenList) {
     }
 }
 
+/**
+ * Finds a Kid object based on the id property of the kid.
+ * @param id {string} id of the Kid object.
+ * @param kidList {Array} list of all Kid objects.
+ * @returns {Kid} Kid object that matches the id.
+ */
 function findKidById(id,kidList) {
     for (let kid in kidList){
         if (id === kidList[kid].id){
@@ -486,6 +513,12 @@ function findKidById(id,kidList) {
     }
 }
 
+/**
+ * Checks if a match exits between a Kid object and a kindergarten spot.
+ * @param list {Array} list of all the tentative matches.
+ * @param priority {string} kindergarten priority for a kid
+ * @returns {boolean|*} - Returns the match if it exists, if the match does not exist it returns false.
+ */
 function checkList(list, priority) {
     for (let i in list){
         if (list[i][1] === priority){
@@ -495,6 +528,11 @@ function checkList(list, priority) {
     return false
 }
 
+/**
+ * Enriches the results by converting the text matches and replacing it with the objects that they represent.
+ * @param resultList {Array} list of all the results (matching) in text format.
+ * @returns {[]} list of enriched results.
+ */
 function enrichResults(resultList) {
     let temp = []
     for (let kid = 0; kid < resultList.length; kid++){
@@ -511,6 +549,10 @@ function enrichResults(resultList) {
     return temp
 }
 
+/**
+ * Displays the results on the HTML page.
+ * @param kindergartenList {Array} List of all Kindergarten objects.
+ */
 function resultsToHTML(kindergartenList) {
     let placement = document.getElementById("main");
 
@@ -544,6 +586,10 @@ function resultsToHTML(kindergartenList) {
     }
 }
 
+/**
+ * Hides a element from the HTML page based on an id of a HTML-element.
+ * @param id {string} id of a HTML-element.
+ */
 function findAndHide(id) {
     let element = document.getElementById(id)
     console.log(element)
@@ -554,6 +600,9 @@ function findAndHide(id) {
 /*---------------------------------------------------PROGRAM START----------------------------------------------------*/
 /*--------------------------------------------------------------------------------------------------------------------*/
 
+/**
+ * Starts the program.
+ */
 function start() {
     findAndHide("onlyButton");
     stableMatching(freeKids,kindergartens)
