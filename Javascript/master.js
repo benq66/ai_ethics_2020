@@ -418,6 +418,7 @@ function stableMatching(freeKidsList, kindergartenList) {
         for (let k in freeKidsList) {
             beginMatch(freeKidsList[k], kindergartenList)
         }
+        break
     }
     kindergartens.push(waiting)
     results = enrichResults(tentativeMatch)
