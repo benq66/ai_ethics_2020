@@ -378,7 +378,11 @@ function createFullPriorityListKidsALL(kidList, waitingList) {
 /*--------------------------------------------------------------------------------------------------------------------*/
 /*------------------------------------------------PROGRAM PREPARATION-------------------------------------------------*/
 /*--------------------------------------------------------------------------------------------------------------------*/
-
+/**
+ * Preparing all that is needed for the matching algorithm. Creating kindergartens, creating kids, creating the waiting list.
+ * @returns {(*[]|Kindergarten[]|Kindergarten)[]} list - Returns a list containing a list of all kids, a list of all
+ * kindergartens and the waiting list Kindergarten object.
+ */
 function program(){
     let kindergartens = dummyKindergartens();
     createSpotsAll(kindergartens)
