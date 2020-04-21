@@ -245,9 +245,9 @@ function getUniquesFromList(list, arg) {
 }
 
 /**
- *
- * @param kindergarten
- * @param kids
+ * Simulating the application to a kindergarten.
+ * @param kindergarten {Kindergarten} Kindergarten object.
+ * @param kids {Array} Kid object - The kid that applies to kindergartens.
  */
 function calculateApplicantsKindergarten(kindergarten, kids){
     for (let kid in kids){
@@ -259,14 +259,22 @@ function calculateApplicantsKindergarten(kindergarten, kids){
     }
 }
 
+/**
+ * Simulating the application to ALL kindergartens.
+ * @param kindergartenList {Array} list of kindergartens.
+ * @param kidList {Array} list of all kids.
+ */
 function getApplicants(kindergartenList, kidList){
     for (let garden in kindergartenList){
         calculateApplicantsKindergarten(kindergartenList[garden], kidList)
     }
 }
 
+/**
+ * Calculates the prioritized list of children for a kindergarten.
+ * @param kindergarten {Kindergarten} Kindergarten object - The kindergarten whose priorities are calculated.
+ */
 function calculatePriority(kindergarten){
-
     for (let kids in kindergarten.applicants){
         for (let i = 0; i < kindergarten.applicants[kids].priority_text.length ; i++) {
                 if (kindergarten.applicants[kids].priority_text[i] === kindergarten.name){
@@ -282,12 +290,22 @@ function calculatePriority(kindergarten){
     }
 }
 
+/**
+ * Calculates the prioritized lists of children for ALL kindergartens.
+ * @param listOfKindergartens
+ */
 function calculatePriorityAllKindergartens(listOfKindergartens){
     for (let kindergarten in listOfKindergartens){
         calculatePriority(listOfKindergartens[kindergarten])
     }
 }
 
+/**
+ * Calculates the size of the waiting list Kindergarten.
+ * @param kindergartenList {Array} list of Kindergarten objects.
+ * @param kidList {Array} list of Kid objects.
+ * @returns {number} waiting list size - Returns the number of kids the waiting list Kindergarten needs to contain.
+ */
 function calculateWaitingListSize(kindergartenList, kidList) {
     let sum = 0
     for (let garden in kindergartenList){
@@ -296,6 +314,11 @@ function calculateWaitingListSize(kindergartenList, kidList) {
     return kidList.length - sum
 }
 
+/**
+ * Generates kindergarten spots for a kindergarten. In two forms. One as a dictionary with properties as spots and one
+ * as a list (array) of all the spots (this is to keep the order).
+ * @param kindergarten {Kindergarten} Kindergarten object. The kindergarten where the spots are created.
+ */
 function createSpots(kindergarten) {
     for (let i = 0; i < kindergarten.spots ; i++) {
         kindergarten.spotCollection[kindergarten["id"] + "spot_" + i] = kindergarten.priority
@@ -303,12 +326,22 @@ function createSpots(kindergarten) {
     }
 }
 
+/**
+ * Generates kindergarten spots for ALL kindergartens.
+ * @param kindergartenList {Array} List of all kindergartens.
+ */
 function createSpotsAll(kindergartenList) {
     for (let k in kindergartenList){
         createSpots(kindergartenList[k])
     }
 }
 
+/**
+ * Function for preparing the waiting list Kindergarten object.
+ * @param kindergartens {Array} list of all kindergartens.
+ * @param kids {Array} list of Kid objects.
+ * @returns {Kindergarten} waiting list Kindergarten.
+ */
 function prepWaitingList(kindergartens, kids) {
     let waiting = waitingList(calculateWaitingListSize(kindergartens, kids))
     waiting.applicants = kids;
@@ -317,6 +350,11 @@ function prepWaitingList(kindergartens, kids) {
     return waiting
 }
 
+/**
+ * Generates a prioritized list of all the spots for all of the kindergartens for a kid.
+ * @param kid {Kid} Kid object - The Kid that has his/her priorities calculated from kindergarten to kindergarten spots.
+ * @param waitingList {Object} waiting list Kindergarten.
+ */
 function createFullPriorityListKids(kid, waitingList) {
     let list = []
     for (let i in kid.priority){
@@ -326,6 +364,11 @@ function createFullPriorityListKids(kid, waitingList) {
     kid.fullPriorityList = list;
 }
 
+/**
+ * Generates a prioritized list of all the spots for all of the kindergartens for ALL kids.
+ * @param kidList {Array} list of all Kid objects.
+ * @param waitingList {Object} waiting list Kindergarten.
+ */
 function createFullPriorityListKidsALL(kidList, waitingList) {
     for (let kids in kidList) {
         createFullPriorityListKids(kidList[kids], waitingList)
