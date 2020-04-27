@@ -554,7 +554,7 @@ function resultsToHTML(kindergartenList) {
     for (let i = 0; i < kindergartenList.length ; i++) {
         let div = document.createElement("DIV");
         let h2 = document.createElement("h2");
-        let name = document.createTextNode(kindergartenList[i].name + "("+kindergartenList[i].district + ")");
+        let name = document.createTextNode(kindergartenList[i].name + " ("+kindergartenList[i].district + ")");
         let ul = document.createElement("UL");
 
         for (let kid in kindergartenList[i].results){
@@ -593,15 +593,38 @@ function resultsToHTML(kindergartenList) {
 
             let reportList = x.report();
 
-            for (let value in reportList){
+            if (reportList.length > 0){
+                for (let value in reportList){
+                    let li = document.createElement("LI");
+                    let text = document.createTextNode(reportList[value]);
+                    li.appendChild(text);
+                    specialInfo.appendChild(li);
+                }
+            }
+
+            if (reportList.length === 0){
                 let li = document.createElement("LI");
-                let text = document.createTextNode(reportList[value]);
+                let text = document.createTextNode("No special considerations.");
                 li.appendChild(text);
                 specialInfo.appendChild(li);
             }
 
+
             let details = document.createElement("DETAILS");
             let summary = document.createElement("SUMMARY");
+
+            personal.style.borderStyle ="solid";
+            personal.style.padding = "5px";
+            personal.style.margin = "5px";
+
+            priority.style.borderStyle ="solid";
+            priority.style.padding = "5px";
+            priority.style.borderColor = "crimson";
+            priority.style.margin = "5px";
+
+            specialInfo.style.borderStyle ="solid";
+            specialInfo.style.padding = "5px";
+            specialInfo.style.margin = "5px";
 
             details.appendChild(personal);
             details.appendChild(priority);
