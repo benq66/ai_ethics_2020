@@ -3,6 +3,7 @@
 //TODO: Add functionality that tracks how many times a child has been reassigned by the algorithm (give the Kid object a property)
 //TODO: Add functionality that tells what priority kindergarten the child got (match this.kindergarten.name to priority list and ge the index)
 //TODO: Look into splitting up the code into different files.
+//TODO: Change the waiting list priority. It needs to prioritize the kids with the lowest scores (IMPORTANT).
 /**
  * Represents a kid.
  * @param hnd {boolean} handicap - If the child has a disability.
@@ -553,7 +554,7 @@ function resultsToHTML(kindergartenList) {
     for (let i = 0; i < kindergartenList.length ; i++) {
         let div = document.createElement("DIV");
         let h2 = document.createElement("h2");
-        let name = document.createTextNode(kindergartenList[i].name);
+        let name = document.createTextNode(kindergartenList[i].name + "("+kindergartenList[i].district + ")");
         let ul = document.createElement("UL");
 
         for (let kid in kindergartenList[i].results){
