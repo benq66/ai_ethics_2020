@@ -95,7 +95,7 @@ function getPriorityObjects(x, kgList) {
             }
         }
     }
-    x.priority = priorityObjects
+    x.priority = priorityObjects;
 }
 
 /**
@@ -285,7 +285,7 @@ function calculatePriority(kindergarten){
     kindergarten.applicants.sort(function (a,b) {return a.tempScore - b.tempScore});
 
     for (let j = kindergarten.applicants.length - 1; j >= 0 ; j--) {
-        kindergarten.priority.push(kindergarten.applicants[j])
+        kindergarten.priority.push(kindergarten.applicants[j]);
         kindergarten.priority_text.push(kindergarten.applicants[j].id)
     }
 }
@@ -321,7 +321,7 @@ function calculateWaitingListSize(kindergartenList, kidList) {
  */
 function createSpots(kindergarten) {
     for (let i = 0; i < kindergarten.spots ; i++) {
-        kindergarten.spotCollection[kindergarten["id"] + "spot_" + i] = kindergarten.priority
+        kindergarten.spotCollection[kindergarten["id"] + "spot_" + i] = kindergarten.priority;
         kindergarten.spotCollection_text.push(kindergarten["id"] + "spot_" + i)
     }
 }
@@ -343,10 +343,10 @@ function createSpotsAll(kindergartenList) {
  * @returns {Kindergarten} waiting list Kindergarten.
  */
 function prepWaitingList(kindergartens, kids) {
-    let waiting = waitingList(calculateWaitingListSize(kindergartens, kids))
+    let waiting = waitingList(calculateWaitingListSize(kindergartens, kids));
     waiting.applicants = kids;
     waiting.priority = kids;
-    createSpots(waiting)
+    createSpots(waiting);
     return waiting
 }
 
@@ -356,11 +356,11 @@ function prepWaitingList(kindergartens, kids) {
  * @param waitingList {Object} waiting list Kindergarten.
  */
 function createFullPriorityListKids(kid, waitingList) {
-    let list = []
+    let list = [];
     for (let i in kid.priority){
         list = list.concat(kid.priority[i].spotCollection_text)
     }
-    list = list.concat(waitingList.spotCollection_text)
+    list = list.concat(waitingList.spotCollection_text);
     kid.fullPriorityList = list;
 }
 
@@ -385,12 +385,12 @@ function createFullPriorityListKidsALL(kidList, waitingList) {
  */
 function program(){
     let kindergartens = dummyKindergartens();
-    createSpotsAll(kindergartens)
+    createSpotsAll(kindergartens);
     let kids = kidGenerator(250, kindergartens);
-    let waiting = prepWaitingList(kindergartens, kids)
+    let waiting = prepWaitingList(kindergartens, kids);
     getApplicants(kindergartens, kids);
     calculatePriorityAllKindergartens(kindergartens);
-    createFullPriorityListKidsALL(kids, waiting)
+    createFullPriorityListKidsALL(kids, waiting);
     return [kids, kindergartens, waiting]
 }
 
@@ -419,8 +419,8 @@ function stableMatching(freeKidsList, kindergartenList) {
             beginMatch(freeKidsList[k], kindergartenList)
         }
     }
-    kindergartens.push(waiting)
-    results = enrichResults(tentativeMatch)
+    kindergartens.push(waiting);
+    results = enrichResults(tentativeMatch);
     resultsToHTML(kindergartens)
 }
 
@@ -432,35 +432,35 @@ function stableMatching(freeKidsList, kindergartenList) {
 function beginMatch(kid, kindergartenList) {
     //console.log("dealing with " + kid.id)
     for (let p = 0; p < kid.fullPriorityList.length; p++) {
-        let exists = checkList(tentativeMatch, kid.fullPriorityList[p])
+        let exists = checkList(tentativeMatch, kid.fullPriorityList[p]);
         if (exists === false){
-            let index = freeKids.indexOf(kid)
+            let index = freeKids.indexOf(kid);
             let y = freeKids.splice(index,1);
-            removed.push(y[0])
+            removed.push(y[0]);
 
-            tentativeMatch.push([kid.id, kid.fullPriorityList[p]])
-            console.log(kid.id + " now has a temporary kindergarten spot: " + kid.fullPriorityList[p] + ".")
+            tentativeMatch.push([kid.id, kid.fullPriorityList[p]]);
+            console.log(kid.id + " now has a temporary kindergarten spot: " + kid.fullPriorityList[p] + ".");
             break
         }
         if (exists){
             //console.log(kid.fullPriorityList[p] + " is taken.")
-            let currentKid = findKindergarten(exists[0], kindergartenList)
-            let thisKid = findKindergarten(kid.id, kindergartenList)
+            let currentKid = findKindergarten(exists[0], kindergartenList);
+            let thisKid = findKindergarten(kid.id, kindergartenList);
 
             if (currentKid > thisKid){
-                let ix = freeKids.indexOf(kid)
+                let ix = freeKids.indexOf(kid);
                 let z = freeKids.splice(ix,1);
-                removed.push(z[0])
+                removed.push(z[0]);
 
-                let qwe = tentativeMatch.indexOf(exists)
-                tentativeMatch.splice(qwe, 1)
+                let qwe = tentativeMatch.indexOf(exists);
+                tentativeMatch.splice(qwe, 1);
 
-                tentativeMatch.push([kid.id, kid.fullPriorityList[p]])
+                tentativeMatch.push([kid.id, kid.fullPriorityList[p]]);
 
-                let addBack = findKidById(exists[0], removed)
-                let inRemovedList = removed.indexOf(addBack)
-                removed.splice(inRemovedList, 1)
-                freeKids.push(addBack)
+                let addBack = findKidById(exists[0], removed);
+                let inRemovedList = removed.indexOf(addBack);
+                removed.splice(inRemovedList, 1);
+                freeKids.push(addBack);
                 break
             }
         }
@@ -534,13 +534,13 @@ function checkList(list, priority) {
  * @returns {[]} list of enriched results.
  */
 function enrichResults(resultList) {
-    let temp = []
+    let temp = [];
     for (let kid = 0; kid < resultList.length; kid++){
 
         let a = findKidById(resultList[kid][0],removed);
-        let b = findKindergartenBySpot(resultList[kid][1], kindergartens)
+        let b = findKindergartenBySpot(resultList[kid][1], kindergartens);
 
-        a.spot = resultList[kid][1]
+        a.spot = resultList[kid][1];
         a.kindergarten = b;
         b.results[resultList[kid][1]] = a;
 
@@ -559,29 +559,29 @@ function resultsToHTML(kindergartenList) {
     for (let i = 0; i < kindergartenList.length ; i++) {
         let div = document.createElement("DIV");
         let h2 = document.createElement("h2");
-        let name = document.createTextNode(kindergartenList[i].name)
+        let name = document.createTextNode(kindergartenList[i].name);
         let ul = document.createElement("UL");
 
         for (let kid in kindergartenList[i].results){
-            let x = kindergartenList[i].results[kid]
-            let span = document.createElement("SPAN")
+            let x = kindergartenList[i].results[kid];
+            let span = document.createElement("SPAN");
             let li = document.createElement("LI");
             let text = document.createTextNode(
                 ". Top 3 priority: "
                 + x.priority_text[0] + ", "
                 + x.priority_text[1] + ", "
                 + x.priority_text[2]);
-            let text2 = document.createTextNode("Id: ")
-            let text3 = document.createTextNode(x.id)
-            li.appendChild(text2)
-            span.appendChild(text3)
-            li.appendChild(span)
-            li.appendChild(text)
+            let text2 = document.createTextNode("Id: ");
+            let text3 = document.createTextNode(x.id);
+            li.appendChild(text2);
+            span.appendChild(text3);
+            li.appendChild(span);
+            li.appendChild(text);
             ul.appendChild(li)
         }
         h2.appendChild(name);
-        div.appendChild(h2)
-        div.appendChild(ul)
+        div.appendChild(h2);
+        div.appendChild(ul);
         placement.appendChild(div)
     }
 }
@@ -591,8 +591,8 @@ function resultsToHTML(kindergartenList) {
  * @param id {string} id of a HTML-element.
  */
 function findAndHide(id) {
-    let element = document.getElementById(id)
-    console.log(element)
+    let element = document.getElementById(id);
+    console.log(element);
     element.style.display = "none";
 }
 
