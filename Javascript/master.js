@@ -9,7 +9,7 @@
  * @param cs {boolean} child services - If the child is involved with the child services.
  * @param sib {array}  kindergarten of siblings - An array containing the names of the kindergartens where this child has siblings.
  * @param sibCount {number} siblings - Numbers of siblings.
-  * @param vi {boolean} visually impaired - If the child is the child of a visually impaired parent.
+ * @param vi {boolean} visually impaired - If the child is the child of a visually impaired parent.
  * @param sp {boolean} single parent - If the child is the child of a single parent.
  * @param im {boolean} immigrant parents - If the child is the child of immigrants (both parents, non english speaking countries).
  * @param district {string} district - The district where the child lives.
@@ -570,11 +570,18 @@ function resultsToHTML(kindergartenList) {
                 + x.priority_text[2]);
             let text2 = document.createTextNode("Id: ");
             let text3 = document.createTextNode(x.id);
-            li.appendChild(text2);
-            span.appendChild(text3);
-            li.appendChild(span);
-            li.appendChild(text);
-            ul.appendChild(li)
+            //li.appendChild(text2);
+            //span.appendChild(text3);
+            //li.appendChild(span);
+            //li.appendChild(text);
+            //ul.appendChild(li)
+
+            let details = document.createElement("DETAILS")
+            details.appendChild(text3)
+            let summary = document.createElement("SUMMARY")
+            summary.appendChild(text)
+            details.appendChild(summary)
+            ul.appendChild(details)
         }
         h2.appendChild(name);
         div.appendChild(h2);
