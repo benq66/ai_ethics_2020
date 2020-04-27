@@ -63,16 +63,16 @@ function report(x) {
         reportArray.push("Has a disability.")
     }
     if (x.values.childServices){
-        reportArray.push("Is involved with child services.");
+        reportArray.push("Involved with child services.");
     }
     if (x.values.childOfVisuallyImpared){
-        reportArray.push("Is a child of a visually impaired parent.");
+        reportArray.push("Child of visually impaired.");
     }
     if (x.values.singleParent){
-        reportArray.push("Is a child of a single parent.");
+        reportArray.push("Child of single parent.");
     }
     if (x.values.childOfImmigrants){
-        reportArray.push("Is a child of immigrants.");
+        reportArray.push("Child of immigrants.");
     }
     return reportArray
 }
