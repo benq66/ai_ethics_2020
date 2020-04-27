@@ -5,6 +5,7 @@
 //TODO: Look into splitting up the code into different files.
 //TODO: Change the waiting list priority. It needs to prioritize the kids with the lowest scores (IMPORTANT).
 //TODO: Change the score system -> district needs to weigh higher i think.
+//TODO: Make the kindergarten list (on HTML page) collapsable.
 /**
  * Represents a kid.
  * @param hnd {boolean} handicap - If the child has a disability.
