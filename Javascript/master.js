@@ -15,16 +15,13 @@
  * @param id_tall {number} id - A number which becomes the unique id of the child in this system.
  * @constructor
  */
-function Kid(hnd, cs, sib, sibCount, emp, vi, sp, im, district, age, priority, kindergartenList, id_tall) {
+function Kid(hnd, cs, sib, sibCount, vi, sp, im, district, age, priority, kindergartenList, id_tall) {
     this.values ={};
     if (hnd === true){
         this.values.handicaped = 1;
     }
     if (cs === true){
         this.values.childServices = 1;
-    }
-    if (emp === true){
-        this.values.childOfEmployed = 1;
     }
     if (vi === true){
         this.values.childOfVisuallyImpared = 1;
@@ -182,7 +179,7 @@ function waitingList(rest) {
  */
 function kidGenerator(limit, kindergartenList) {
     let sample = [];
-    let bool = [true, false];
+    let bool = [true, false, false, false, false]; //20% chance of true.
     let districts = getUniquesFromList(kindergartenList, "district");
 
     for (let i = 0; i < limit ; i++) {
@@ -190,14 +187,13 @@ function kidGenerator(limit, kindergartenList) {
         let length = priorities.length;
         sample.push(
             new Kid(
-                bool[randomInt(2)],
-                bool[randomInt(2)],
+                bool[randomInt(4)],
+                bool[randomInt(4)],
                 [],
                 randomInt(3),
-                bool[randomInt(2)],
-                bool[randomInt(2)],
-                bool[randomInt(2)],
-                bool[randomInt(2)],
+                bool[randomInt(4)],
+                bool[randomInt(4)],
+                bool[randomInt(4)],
                 districts[randomInt(districts.length)],
                 randomInt(6),[], kindergartenList, i
             ));
