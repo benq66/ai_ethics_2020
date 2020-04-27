@@ -1,11 +1,15 @@
+//TODO: Add functionality so that a kid can be the child of a kindergarten employee.
+//TODO: Improve algorithm efficiency.
+//TODO: Add functionality that tracks how many times a child has been reassigned by the algorithm (give the Kid object a property)
+//TODO: Add functionality that tells what priority kindergarten the child got (match this.kindergarten.name to priority list and ge the index)
+//TODO: Look into splitting up the code into different files.
 /**
  * Represents a kid.
  * @param hnd {boolean} handicap - If the child has a disability.
  * @param cs {boolean} child services - If the child is involved with the child services.
  * @param sib {array}  kindergarten of siblings - An array containing the names of the kindergartens where this child has siblings.
  * @param sibCount {number} siblings - Numbers of siblings.
- * @param emp {boolean} child of employed - If the child is the child of an employed in the kindergarten.
- * @param vi {boolean} visually impaired - If the child is the child of a visually impaired parent.
+  * @param vi {boolean} visually impaired - If the child is the child of a visually impaired parent.
  * @param sp {boolean} single parent - If the child is the child of a single parent.
  * @param im {boolean} immigrant parents - If the child is the child of immigrants (both parents, non english speaking countries).
  * @param district {string} district - The district where the child lives.
@@ -62,9 +66,6 @@ function report(x) {
     }
     if (x.siblingsCount){
         report += "• Has " + x.siblingsCount + " siblings.\n"
-    }
-    if (x.values.childOfEmployed){
-        report += "• Is a child of an employee.\n"
     }
     if (x.values.childOfVisuallyImpared){
         report += "• Is a child of a visually impaired parent.\n"
@@ -435,7 +436,7 @@ function beginMatch(kid, kindergartenList) {
             removed.push(y[0]);
 
             tentativeMatch.push([kid.id, kid.fullPriorityList[p]]);
-            console.log(kid.id + " now has a temporary kindergarten spot: " + kid.fullPriorityList[p] + ".");
+            //console.log(kid.id + " now has a temporary kindergarten spot: " + kid.fullPriorityList[p] + ".");
             break
         }
         if (exists){
