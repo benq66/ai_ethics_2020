@@ -54,29 +54,26 @@ function Kid(hnd, cs, sib, sibCount, vi, sp, im, district, age, priority, kinder
 /**
  * Represents a report for a child, summarizing all its key information.
  * @param x {Kid} kid object - Object representing a child.
- * @returns {string} report - String representing a report for the child.
+ * @returns {Array} report - String representing a report for the child.
  */
 function report(x) {
-    let report = "Report (" + x.id + "):\n";
+    let reportArray = [];
     if (x.values.handicaped){
-        report += "• Has a disability.\n"
+        reportArray.push("Has a disability.")
     }
     if (x.values.childServices){
-        report += "• Is involved with child services.\n"
-    }
-    if (x.siblingsCount){
-        report += "• Has " + x.siblingsCount + " siblings.\n"
+        reportArray.push("Is involved with child services.");
     }
     if (x.values.childOfVisuallyImpared){
-        report += "• Is a child of a visually impaired parent.\n"
+        reportArray.push("Is a child of a visually impaired parent.");
     }
     if (x.values.singleParent){
-        report += "• Is a child of a single parent.\n"
+        reportArray.push("Is a child of a single parent.");
     }
     if (x.values.childOfImmigrants){
-        report += "• Is a child of immigrants.\n"
+        reportArray.push("Is a child of immigrants.");
     }
-    return report
+    return reportArray
 }
 
 /**
@@ -560,27 +557,57 @@ function resultsToHTML(kindergartenList) {
         let ul = document.createElement("UL");
 
         for (let kid in kindergartenList[i].results){
-            let x = kindergartenList[i].results[kid];
-            let span = document.createElement("SPAN");
-            let li = document.createElement("LI");
-            let text = document.createTextNode(
-                ". Top 3 priority: "
-                + x.priority_text[0] + ", "
-                + x.priority_text[1] + ", "
-                + x.priority_text[2]);
-            let text2 = document.createTextNode("Id: ");
-            let text3 = document.createTextNode(x.id);
-            //li.appendChild(text2);
-            //span.appendChild(text3);
-            //li.appendChild(span);
-            //li.appendChild(text);
-            //ul.appendChild(li)
+            let personal = document.createElement("DIV");
+                let age_li = document.createElement("li");
+                let district_li = document.createElement("li");
+                let siblings_li = document.createElement("li");
+            let priority = document.createElement("DIV");
+            let priority_head = document.createElement("li");
+            let priorities = document.createTextNode("Priority (score): ");
+            let specialInfo = document.createElement("DIV");
 
-            let details = document.createElement("DETAILS")
-            details.appendChild(text3)
-            let summary = document.createElement("SUMMARY")
-            summary.appendChild(text)
-            details.appendChild(summary)
+            let x = kindergartenList[i].results[kid];
+
+            let summary_text = document.createTextNode(x.spot + ": " + x.id);
+            let age = document.createTextNode("Age: " + x.age);
+            let district = document.createTextNode("District: " + x.district);
+            let siblings = document.createTextNode("Siblings: " + x.siblingsCount);
+            age_li.appendChild(age);
+            district_li.appendChild(district);
+            siblings_li.appendChild(siblings);
+            personal.appendChild(age_li);
+            personal.appendChild(district_li);
+            personal.appendChild(siblings_li);
+
+            let priorityList = document.createElement("OL");
+            for (let priority in x.priority_text){
+                let li = document.createElement("LI");
+                let text_priority = document.createTextNode(x.priority_text[priority] + " (" + x.score[priority]+")");
+                li.appendChild(text_priority);
+                priorityList.appendChild(li);
+            }
+            priority_head.appendChild(priorities);
+            priority.appendChild(priority_head);
+            priority.appendChild(priorityList);
+
+            let reportList = x.report();
+
+            for (let value in reportList){
+                let li = document.createElement("LI");
+                let text = document.createTextNode(reportList[value]);
+                li.appendChild(text);
+                specialInfo.appendChild(li);
+            }
+
+            let details = document.createElement("DETAILS");
+            let summary = document.createElement("SUMMARY");
+
+            details.appendChild(personal);
+            details.appendChild(priority);
+            details.appendChild(specialInfo);
+
+            summary.appendChild(summary_text);
+            details.appendChild(summary);
             ul.appendChild(details)
         }
         h2.appendChild(name);
@@ -596,7 +623,6 @@ function resultsToHTML(kindergartenList) {
  */
 function findAndHide(id) {
     let element = document.getElementById(id);
-    console.log(element);
     element.style.display = "none";
 }
 
