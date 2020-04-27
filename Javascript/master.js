@@ -179,7 +179,7 @@ function waitingList(rest) {
  */
 function kidGenerator(limit, kindergartenList) {
     let sample = [];
-    let bool = [true, false, false, false, false]; //20% chance of true.
+    let bool = [true, false, false, false, false, false, false, false, false, false];
     let districts = getUniquesFromList(kindergartenList, "district");
 
     for (let i = 0; i < limit ; i++) {
@@ -187,13 +187,13 @@ function kidGenerator(limit, kindergartenList) {
         let length = priorities.length;
         sample.push(
             new Kid(
-                bool[randomInt(4)],
-                bool[randomInt(4)],
+                bool[randomInt(9)],
+                bool[randomInt(9)],
                 [],
                 randomInt(3),
-                bool[randomInt(4)],
-                bool[randomInt(4)],
-                bool[randomInt(4)],
+                bool[randomInt(9)],
+                bool[randomInt(9)],
+                bool[randomInt(9)],
                 districts[randomInt(districts.length)],
                 randomInt(6),[], kindergartenList, i
             ));
