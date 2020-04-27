@@ -4,6 +4,7 @@
 //TODO: Add functionality that tells what priority kindergarten the child got (match this.kindergarten.name to priority list and ge the index)
 //TODO: Look into splitting up the code into different files.
 //TODO: Change the waiting list priority. It needs to prioritize the kids with the lowest scores (IMPORTANT).
+//TODO: Change the score system -> district needs to weigh higher i think.
 /**
  * Represents a kid.
  * @param hnd {boolean} handicap - If the child has a disability.
