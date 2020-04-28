@@ -3,7 +3,6 @@
 //DONE: Add functionality that tracks how many times a child has been reassigned by the algorithm (give the Kid object a property)
 //DONE: Add functionality that tells what priority kindergarten the child got (match this.kindergarten.name to priority list and ge the index)
 //TODO: Look into splitting up the code into different files.
-//TODO: Change the waiting list priority. It needs to prioritize the kids with the lowest scores (IMPORTANT).
 //TODO: Change the score system -> district needs to weigh higher i think.
 //TODO: Make the kindergarten list (on HTML page) collapsable.
 //TODO: Change priority functionality so the children only need to prioritize three kindergartens. (OPTIONAL)
@@ -116,7 +115,7 @@ function kidScore(x) {
             valueScore += x.values[v];
         }
         if (x.district === x.priority[u].district){
-            districtScore += 1
+            districtScore += 2
         }
         for (let h in x.siblingsKG){
             if (x.siblingsKG[h] === x.priority[u].name){
