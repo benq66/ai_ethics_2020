@@ -1,6 +1,6 @@
 //TODO: Add functionality so that a kid can be the child of a kindergarten employee.
 //TODO: Improve algorithm efficiency.
-//TODO: Add functionality that tracks how many times a child has been reassigned by the algorithm (give the Kid object a property)
+//DONE: Add functionality that tracks how many times a child has been reassigned by the algorithm (give the Kid object a property)
 //TODO: Add functionality that tells what priority kindergarten the child got (match this.kindergarten.name to priority list and ge the index)
 //TODO: Look into splitting up the code into different files.
 //TODO: Change the waiting list priority. It needs to prioritize the kids with the lowest scores (IMPORTANT).
@@ -52,6 +52,7 @@ function Kid(hnd, cs, sib, sibCount, vi, sp, im, district, age, priority, kinder
     this.report = function () {return report(this)}
     this.spot = "";
     this.kindergarten = undefined;
+    this.amountReassigned = 0;
 }
 
 /**
@@ -455,6 +456,7 @@ function beginMatch(kid, kindergartenList) {
                 tentativeMatch.push([kid.id, kid.fullPriorityList[p]]);
 
                 let addBack = findKidById(exists[0], removed);
+                addBack.timesReassigned += 1;
                 let inRemovedList = removed.indexOf(addBack);
                 removed.splice(inRemovedList, 1);
                 freeKids.push(addBack);
@@ -667,3 +669,5 @@ function start() {
 /*--------------------------------------------------------------------------------------------------------------------*/
 /*--------------------------------------------------------END---------------------------------------------------------*/
 /*--------------------------------------------------------------------------------------------------------------------*/
+
+//This section will be concerned with creating lists of the kids based on different factors.
