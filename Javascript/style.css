@@ -3,7 +3,7 @@ html{
     display: flex;
     flex-direction: column;
     font-family: 'Roboto', sans-serif;
-    font-size: 20px;
+    font-size: 12px;
     /*color: white;*/
     color:#FF0087;
 }
@@ -52,7 +52,7 @@ button{
     border: none;
     box-sizing: border-box;
     /*color: white;*/
-    font-size: 30px;
+    font-size: 16px;
     /*background-image: linear-gradient(to bottom,  #9a9ae1, #8aa7ec);*/
     background-color: #FF0087;
     color: #FFF600;
