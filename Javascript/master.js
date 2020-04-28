@@ -52,7 +52,7 @@ function Kid(hnd, cs, sib, sibCount, vi, sp, im, district, age, priority, kinder
     this.report = function () {return report(this)}
     this.spot = "";
     this.kindergarten = undefined;
-    this.amountReassigned = 0;
+    this.timesReassigned = 0;
 }
 
 /**
