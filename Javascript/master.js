@@ -47,14 +47,14 @@ function Kid(hnd, cs, sib, sibCount, vi, sp, im, district, age, priority, kinder
     this.priority_text = priority;
     this.priority = undefined;
     this.fullPriorityList = [];
-    this.getPriority = function () {getPriorityObjects(this, kindergartenList)};
-    this.calculateScore = function () {this.score = kidScore(this); return this.score};
-    this.id = "kid_" + id_tall;
-    this.report = function () {return report(this)}
     this.spot = "";
     this.kindergarten = undefined;
     this.timesReassigned = 0;
     this.gottenPriority = undefined;
+    this.id = "kid_" + id_tall;
+    this.getPriority = function () {getPriorityObjects(this, kindergartenList)};
+    this.calculateScore = function () {this.score = kidScore(this); return this.score};
+    this.report = function () {return report(this)}
 }
 
 /**
@@ -630,7 +630,7 @@ function resultsToHTML(kindergartenList) {
             priority.style.borderStyle = "solid";
             priority.style.padding = "5px";
             //priority.style.borderColor = "crimson";
-            priority.style.borderColor = "#FFF600"
+            priority.style.borderColor = "#fff600"
             priority.style.margin = "5px";
 
             specialInfo.style.borderStyle = "solid";
