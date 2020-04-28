@@ -405,7 +405,7 @@ let waiting = collection[2]; // The waiting list Kindergarten object.
 
 let freeKids = kids; // Duplicate of list containing all Kid objects.
 let tentativeMatch = []; // List of all the matches text (when program is finished).
-let removed = []; // List of all Kid objects after the program is finished.
+let matched = []; // List of all Kid objects after the program is finished.
 let results; // List of all the matches as objects.
 
 /**
@@ -436,7 +436,7 @@ function beginMatch(kid, kindergartenList) {
         if (exists === false){
             let index = freeKids.indexOf(kid);
             let y = freeKids.splice(index,1);
-            removed.push(y[0]);
+            matched.push(y[0]);
 
             tentativeMatch.push([kid.id, kid.fullPriorityList[p]]);
             //console.log(kid.id + " now has a temporary kindergarten spot: " + kid.fullPriorityList[p] + ".");
@@ -450,17 +450,17 @@ function beginMatch(kid, kindergartenList) {
             if (currentKid > thisKid){
                 let ix = freeKids.indexOf(kid);
                 let z = freeKids.splice(ix,1);
-                removed.push(z[0]);
+                matched.push(z[0]);
 
                 let qwe = tentativeMatch.indexOf(exists);
                 tentativeMatch.splice(qwe, 1);
 
                 tentativeMatch.push([kid.id, kid.fullPriorityList[p]]);
 
-                let addBack = findKidById(exists[0], removed);
+                let addBack = findKidById(exists[0], matched);
                 addBack.timesReassigned += 1;
-                let inRemovedList = removed.indexOf(addBack);
-                removed.splice(inRemovedList, 1);
+                let inRemovedList = matched.indexOf(addBack);
+                matched.splice(inRemovedList, 1);
                 freeKids.push(addBack);
                 break
             }
@@ -542,7 +542,7 @@ function enrichResults(resultList) {
     let temp = [];
     for (let kid = 0; kid < resultList.length; kid++){
 
-        let a = findKidById(resultList[kid][0],removed);
+        let a = findKidById(resultList[kid][0], matched);
         let b = findKindergartenBySpot(resultList[kid][1], kindergartens);
 
         a.spot = resultList[kid][1];
@@ -694,13 +694,13 @@ function start() {
  * Heap function to call all functions related to calculation of metrics.
  */
 function metrics() {
-    checkPriority(removed)
-    calculatePriorityMetric(removed)
+    checkPriority(matched)
+    calculatePriorityMetric(matched)
 }
 
 /**
  * Function used to calculate how many children og their 1., 2., 3. and > 3. priority of kindergarten. Also how many got waiting list (so none of their priority).
- * @param kidList {Array} list of all kids after the matching is done (in the removed global variable)
+ * @param kidList {Array} list of all kids after the matching is done (in the matched global variable)
  * @returns {number[]} returns a list the number of kids that got their 1st, 2nd, 3rd, >3rd (priority) and waiting list.
  */
 function calculatePriorityMetric(kidList) {
@@ -733,11 +733,11 @@ function calculatePriorityMetric(kidList) {
         + rest + " got > 3rd priority. \n"
         + wait + " got waiting list.";
 
-    let reportPercentage = toPercentage(first, removed.length)+ "% got 1st priority.\n"
-        + toPercentage(second,removed.length) + "% got 2nd priority.\n"
-        + toPercentage(third,removed.length) + "% got 3rd priority.\n"
-        + toPercentage(rest,removed.length) + "% got >3rd priority. \n"
-        + toPercentage(wait,removed.length) + "% got waiting list.";
+    let reportPercentage = toPercentage(first, matched.length)+ "% got 1st priority.\n"
+        + toPercentage(second,matched.length) + "% got 2nd priority.\n"
+        + toPercentage(third,matched.length) + "% got 3rd priority.\n"
+        + toPercentage(rest,matched.length) + "% got >3rd priority. \n"
+        + toPercentage(wait,matched.length) + "% got waiting list.";
 
     console.log(reportNumbers); //logs a report in the console with the numbers.
     console.log(reportPercentage) //logs a report in the console with the percentage.
