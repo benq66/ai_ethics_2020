@@ -4,13 +4,15 @@ html{
     flex-direction: column;
     font-family: 'Roboto', sans-serif;
     font-size: 20px;
-    color: white;
+    /*color: white;*/
+    color:#FF0087;
 }
 
 h2{
     text-align: center;
     margin: 1%;
-    color: #FF9671;
+    /*color: #FF9671;*/
+    color:#FFF600;
 }
 
 #main {
@@ -30,7 +32,8 @@ html::-webkit-scrollbar {
 
 html{
     min-height: 100%;
-    background-image: linear-gradient(to bottom, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+    /*background-image: linear-gradient(to bottom, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);*/
+    background-color: black;
 }
 
 
@@ -48,9 +51,12 @@ button{
     padding: 12px 20px;
     border: none;
     box-sizing: border-box;
-    color: white;
-    font-size: 20px;
-    background-image: linear-gradient(to bottom,  #9a9ae1, #8aa7ec);
+    /*color: white;*/
+    font-size: 30px;
+    /*background-image: linear-gradient(to bottom,  #9a9ae1, #8aa7ec);*/
+    background-color: #FF0087;
+    color: #FFF600;
+    box-shadow: 5px 10px;
 }
 .wrapper {
     text-align: center;
@@ -62,7 +68,9 @@ button{
 }
 
 button:hover{
-    background-image: linear-gradient(to top,  #9a9ae1, #8aa7ec);
+    /*background-image: linear-gradient(to top,  #9a9ae1, #8aa7ec);*/
+    background-color: #FFF600;
+    color: #FF0087;
 }
 
 span{

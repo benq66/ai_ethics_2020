@@ -623,16 +623,17 @@ function resultsToHTML(kindergartenList) {
             let details = document.createElement("DETAILS");
             let summary = document.createElement("SUMMARY");
 
-            personal.style.borderStyle ="solid";
+            personal.style.borderStyle = "solid";
             personal.style.padding = "5px";
             personal.style.margin = "5px";
 
-            priority.style.borderStyle ="solid";
+            priority.style.borderStyle = "solid";
             priority.style.padding = "5px";
-            priority.style.borderColor = "crimson";
+            //priority.style.borderColor = "crimson";
+            priority.style.borderColor = "#FFF600"
             priority.style.margin = "5px";
 
-            specialInfo.style.borderStyle ="solid";
+            specialInfo.style.borderStyle = "solid";
             specialInfo.style.padding = "5px";
             specialInfo.style.margin = "5px";
 
