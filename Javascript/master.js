@@ -53,6 +53,7 @@ function Kid(hnd, cs, sib, sibCount, vi, sp, im, district, age, priority, kinder
     this.spot = "";
     this.kindergarten = undefined;
     this.timesReassigned = 0;
+    this.gottenPriority = undefined;
 }
 
 /**
@@ -466,6 +467,10 @@ function beginMatch(kid, kindergartenList) {
     }
 }
 
+/*--------------------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------HELP FUNCTIONS---------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------*/
+
 /**
  * Finds the index of i Kid from a Kindergartens prioritized list based on a Kid's id property.
  * @param id {string} id of a Kid object.
@@ -654,6 +659,16 @@ function findAndHide(id) {
     element.style.display = "none";
 }
 
+function checkPriority(kidList) {
+    for (let kid in kidList) {
+        for (let i = 0; i < kidList[kid].priority_text.length; i++){
+            if (kidList[kid].priority_text[i] === kidList[kid].kindergarten.name){
+                kidList[kid].gottenPriority = i
+            }
+        }
+    }
+}
+
 /*--------------------------------------------------------------------------------------------------------------------*/
 /*---------------------------------------------------PROGRAM START----------------------------------------------------*/
 /*--------------------------------------------------------------------------------------------------------------------*/
@@ -664,6 +679,7 @@ function findAndHide(id) {
 function start() {
     findAndHide("onlyButton");
     stableMatching(freeKids,kindergartens)
+    metrics()
 }
 
 /*--------------------------------------------------------------------------------------------------------------------*/
@@ -671,3 +687,35 @@ function start() {
 /*--------------------------------------------------------------------------------------------------------------------*/
 
 //This section will be concerned with creating lists of the kids based on different factors.
+
+function metrics() {
+    checkPriority(removed)
+    calculatePriorityMetric(removed)
+}
+
+function calculatePriorityMetric(kidList) {
+    let first = 0;
+    let second = 0;
+    let third = 0;
+    let rest = 0;
+    let wait = 0
+    for (let kid in kidList) {
+        if (kidList[kid].gottenPriority === 0){
+            first += 1
+        }
+        if (kidList[kid].gottenPriority === 1){
+            second += 1
+        }
+        if (kidList[kid].gottenPriority === 2){
+            third += 1
+        }
+        if (kidList[kid].gottenPriority > 2){
+            rest += 1
+        }
+        if (kidList[kid].gottenPriority === undefined){
+            wait += 1
+        }
+    }
+    console.log(first + " got first priority.", second + " got second priority.", third + " got third priority.", rest + " got > third priority.", wait + " got waiting list.")
+    return [first,second,third,rest,wait]
+}
