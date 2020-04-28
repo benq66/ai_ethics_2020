@@ -1,11 +1,12 @@
 //TODO: Add functionality so that a kid can be the child of a kindergarten employee.
 //TODO: Improve algorithm efficiency.
 //DONE: Add functionality that tracks how many times a child has been reassigned by the algorithm (give the Kid object a property)
-//TODO: Add functionality that tells what priority kindergarten the child got (match this.kindergarten.name to priority list and ge the index)
+//DONE: Add functionality that tells what priority kindergarten the child got (match this.kindergarten.name to priority list and ge the index)
 //TODO: Look into splitting up the code into different files.
 //TODO: Change the waiting list priority. It needs to prioritize the kids with the lowest scores (IMPORTANT).
 //TODO: Change the score system -> district needs to weigh higher i think.
 //TODO: Make the kindergarten list (on HTML page) collapsable.
+//TODO: Change priority functionality so the children only need to prioritize three kindergartens. (OPTIONAL)
 /**
  * Represents a kid.
  * @param hnd {boolean} handicap - If the child has a disability.
@@ -688,11 +689,19 @@ function start() {
 
 //This section will be concerned with creating lists of the kids based on different factors.
 
+/**
+ * Heap function to call all functions related to calculation of metrics.
+ */
 function metrics() {
     checkPriority(removed)
     calculatePriorityMetric(removed)
 }
 
+/**
+ * Function used to calculate how many children og their 1., 2., 3. and > 3. priority of kindergarten. Also how many got waiting list (so none of their priority).
+ * @param kidList {Array} list of all kids after the matching is done (in the removed global variable)
+ * @returns {number[]} returns a list the number of kids that got their 1st, 2nd, 3rd, >3rd (priority) and waiting list.
+ */
 function calculatePriorityMetric(kidList) {
     let first = 0;
     let second = 0;
@@ -716,6 +725,24 @@ function calculatePriorityMetric(kidList) {
             wait += 1
         }
     }
-    console.log(first + " got first priority.", second + " got second priority.", third + " got third priority.", rest + " got > third priority.", wait + " got waiting list.")
+
+    let reportNumbers = first + " got 1st priority.\n"
+        + second + " got 2nd priority.\n"
+        + third + " got 3rd priority.\n"
+        + rest + " got > 3rd priority. \n"
+        + wait + " got waiting list.";
+
+    let reportPercentage = toPercentage(first, removed.length)+ "% got 1st priority.\n"
+        + toPercentage(second,removed.length) + "% got 2nd priority.\n"
+        + toPercentage(third,removed.length) + "% got 3rd priority.\n"
+        + toPercentage(rest,removed.length) + "% got >3rd priority. \n"
+        + toPercentage(wait,removed.length) + "% got waiting list.";
+
+    console.log(reportNumbers); //logs a report in the console with the numbers.
+    console.log(reportPercentage) //logs a report in the console with the percentage.
     return [first,second,third,rest,wait]
+}
+
+function toPercentage(n,total) {
+    return ((100/total) * n).toFixed(1)
 }
