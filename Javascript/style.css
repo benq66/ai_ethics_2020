@@ -4,14 +4,12 @@ html{
     flex-direction: column;
     font-family: 'Roboto', sans-serif;
     font-size: 12px;
-    /*color: white;*/
     color:#FF0087;
 }
 
 h2{
     text-align: center;
     margin: 1%;
-    /*color: #FF9671;*/
     color:#FFF600;
 }
 
@@ -35,7 +33,6 @@ html{
     background-color: black;
 }
 
-
 ul {
     list-style-type: none;
 }
@@ -47,7 +44,6 @@ button{
     box-sizing: border-box;
     font-size: 16px;
     font-weight: bold;
-    /*background-image: linear-gradient(to bottom,  #9a9ae1, #8aa7ec);*/
     background-color: black;
     color: #FF0087;
     box-shadow: 0px 0px 150px 50px #FF0087;
@@ -63,28 +59,15 @@ button{
 }
 
 button:hover{
-    /*background-image: linear-gradient(to top,  #9a9ae1, #8aa7ec);*/
     color: #04ff00;
     box-shadow:  0px 0px 150px 50px #04ff00;
 }
 
 button:focus{
-    /*background-image: linear-gradient(to top,  #9a9ae1, #8aa7ec);*/
     color:#FFF600;
     box-shadow:  0px 0px 150px 50px #FFF600;
 }
 
-
 span{
     color: #04ff00;
 }
-
-/* NOTE:
-#845EC2
-#D65DB1
-#FF6F91
-#FF9671
-#FFC75F
-#F9F871 */
-
-/* NOTE: gradient generert på denne siden: https://mycolor.space/gradient */
