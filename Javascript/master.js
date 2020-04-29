@@ -51,6 +51,7 @@ function Kid(hnd, cs, sib, sibCount, vi, sp, im, district, age, priority, kinder
     this.timesReassigned = 0;
     this.gottenPriority = undefined;
     this.id = "kid_" + id_tall;
+    this.log = ["Log for " + this.id + ":"];
     this.getPriority = function () {getPriorityObjects(this, kindergartenList)};
     this.calculateScore = function () {this.score = kidScore(this); return this.score};
     this.report = function () {return report(this)}
@@ -108,9 +109,8 @@ function kidScore(x) {
     for (let u in x.priority){
         let valueScore = 0;
         let districtScore = 0;
-        let ageScore = x.age; //TODO: Find a way to calculate age points based on birth date.
+        let ageScore = x.age;
         let siblingScore = 0;
-        //TODO: remove "child of employed" from valueScore and calculate this for each kindergarten like the siblingsScore.
         for (let v in x.values){
             valueScore += x.values[v];
         }
@@ -438,7 +438,7 @@ function beginMatch(kid, kindergartenList) {
             matched.push(y[0]);
 
             tentativeMatch.push([kid.id, kid.fullPriorityList[p]]);
-            //console.log(kid.id + " now has a temporary kindergarten spot: " + kid.fullPriorityList[p] + ".");
+            kid.log.push("Temporary spot: " + kid.fullPriorityList[p] + ".");
             break
         }
         if (exists){
@@ -455,9 +455,10 @@ function beginMatch(kid, kindergartenList) {
                 tentativeMatch.splice(qwe, 1);
 
                 tentativeMatch.push([kid.id, kid.fullPriorityList[p]]);
-
+                kid.log.push("Temporary spot: " + kid.fullPriorityList[p] + ".");
                 let addBack = findKidById(exists[0], matched);
                 addBack.timesReassigned += 1;
+                addBack.log.push("Spot lost." + " Priority by kindergarten: " + currentKid + "(you) vs. " + thisKid + "(other)")
                 let inRemovedList = matched.indexOf(addBack);
                 matched.splice(inRemovedList, 1);
                 freeKids.push(addBack);
