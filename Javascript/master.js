@@ -655,8 +655,8 @@ function resultsToHTML(kindergartenList) {
             log.style.borderStyle = "solid";
             log.style.padding = "5px";
             log.style.margin = "5px";
-            log.style.borderColor = "#3808FF"
-            log.style.color = "#3808FF"
+            log.style.borderColor = "#04ff00"
+            log.style.color = "#04ff00"
 
             details.appendChild(personal);
             details.appendChild(priority);

@@ -50,8 +50,8 @@ button{
     font-weight: bold;
     /*background-image: linear-gradient(to bottom,  #9a9ae1, #8aa7ec);*/
     background-color: #FF0087;
-    color: #3808FF;
-    box-shadow: 5px 10px #FFF600;
+    color: #FFF600;
+    box-shadow: 5px 10px;
 
 }
 .wrapper {
@@ -66,12 +66,12 @@ button{
 button:hover{
     /*background-image: linear-gradient(to top,  #9a9ae1, #8aa7ec);*/
     background-color: #FFF600;
-    color: #3808FF;
-    box-shadow: 5px 10px #FF0087;
+    color: #FF0087;
+    box-shadow: 5px 10px;
 }
 
 span{
-    color: #3808FF;
+    color: #04ff00;
 }
 
 /* NOTE:
