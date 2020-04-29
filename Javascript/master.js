@@ -755,11 +755,11 @@ function calculatePriorityMetric(kidList) {
         + rest + " got > 3rd priority. \n"
         + wait + " got waiting list.";
 
-    let reportPercentage = putInSpan(toPercentage(first, matched.length))+ " got 1st priority.\n"
-        + putInSpan(toPercentage(second,matched.length)) + " got 2nd priority. "
-        + putInSpan(toPercentage(third,matched.length)) + " got 3rd priority. "
-        + putInSpan(toPercentage(rest,matched.length)) + " got >3rd priority. "
-        + putInSpan(toPercentage(wait,matched.length)) + " got waiting list. ";
+    let reportPercentage = putInSpan(toPercentage(first, matched.length))+ " 1st priority.\n"
+        + putInSpan(toPercentage(second,matched.length)) + " 2nd priority. "
+        + putInSpan(toPercentage(third,matched.length)) + " 3rd priority. "
+        + putInSpan(toPercentage(rest,matched.length)) + " >3rd priority. "
+        + putInSpan(toPercentage(wait,matched.length)) + " waiting list. ";
 
     //console.log(reportNumbers); //logs a report in the console with the numbers.
     //console.log(reportPercentage) //logs a report in the console with the percentage.
