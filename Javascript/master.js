@@ -153,15 +153,15 @@ function Kindergarten(name, id, district, spots) {
  * @returns {Kindergarten[]} list of kindergarten - Returns a list of the created kindergartens.
  */
 function dummyKindergartens() {
-    let a = new Kindergarten("a", "0101", "Åsane", 20);
-    let b = new Kindergarten("b", "0102", "Arna", 40);
-    let c = new Kindergarten("c", "0103", "Bergenhus", 30);
-    let d = new Kindergarten("d", "0104", "Årstad", 10);
-    let e = new Kindergarten("e", "0105", "Laksevåg", 30);
-    let f = new Kindergarten("f", "0106", "Fyllingsdalen", 20);
-    let g = new Kindergarten("g", "0107", "Ytrebygda", 20);
-    let h = new Kindergarten("h", "0108", "Fana", 20);
-    let i = new Kindergarten("i", "0109", "Fana", 10);
+    let a = new Kindergarten("Salhus barnehage", "0101", "Åsane", 18);
+    let b = new Kindergarten("Bogane barnehage", "0102", "Arna", 50);
+    let c = new Kindergarten("Marken barnehage", "0103", "Bergenhus", 30);
+    let d = new Kindergarten("Sletten barnehage", "0104", "Årstad", 10);
+    let e = new Kindergarten("Lyngfaret barnehage", "0105", "Laksevåg", 30);
+    let f = new Kindergarten("Brinken barnehage", "0106", "Fyllingsdalen", 20);
+    let g = new Kindergarten("Aurdalslia barnehage", "0107", "Ytrebygda", 20);
+    let h = new Kindergarten("Apeltun barnehage", "0108", "Fana", 20);
+    let i = new Kindergarten("Skjold barnehage", "0109", "Fana", 10);
     return [a,b,c,d,e,f,g,h,i]
 }
 
