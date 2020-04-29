@@ -677,10 +677,11 @@ function resultsToHTML(kindergartenList) {
 /**
  * Hides a element from the HTML page based on an id of a HTML-element.
  * @param id {string} id of a HTML-element.
+ * @param what {string} what you want to change the display to
  */
-function findAndHide(id) {
+function changeDisplay(id, what) {
     let element = document.getElementById(id);
-    element.style.display = "none";
+    element.style.display = what;
 }
 
 function checkPriority(kidList) {
@@ -701,7 +702,8 @@ function checkPriority(kidList) {
  * Starts the program.
  */
 function start() {
-    findAndHide("onlyButton");
+    changeDisplay("onlyButton", "none");
+    changeDisplay("image", "block");
     stableMatching(freeKids,kindergartens)
     metrics()
 }

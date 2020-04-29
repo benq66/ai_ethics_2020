@@ -56,6 +56,13 @@ button{
     position: absolute;
     top: 50%;
 }
+img{
+    width: 15%;
+}
+
+.hidden{
+    display: none;
+}
 
 button:hover{
     color: #04ff00;
