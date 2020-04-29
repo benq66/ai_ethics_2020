@@ -458,7 +458,7 @@ function beginMatch(kid, kindergartenList) {
                 kid.log.push("Temporary spot: " + kid.fullPriorityList[p] + ".");
                 let addBack = findKidById(exists[0], matched);
                 addBack.timesReassigned += 1;
-                addBack.log.push("Spot lost." + " Priority by kindergarten: " + currentKid + "(you) vs. " + thisKid + "(other)")
+                addBack.log.push("Spot lost." + " Priority by kindergarten: " + currentKid + "(this) vs. " + thisKid + "(other)")
                 let inRemovedList = matched.indexOf(addBack);
                 matched.splice(inRemovedList, 1);
                 freeKids.push(addBack);
@@ -576,6 +576,9 @@ function resultsToHTML(kindergartenList) {
             let priority_head = document.createElement("li");
             let priorities = document.createTextNode("Priority (score): ");
             let specialInfo = document.createElement("DIV");
+            let log = document.createElement("DIV")
+                let log_details = document.createElement("DETAILS");
+                let log_summary = document.createElement("SUMMARY");
 
             let x = kindergartenList[i].results[kid];
 
@@ -619,6 +622,17 @@ function resultsToHTML(kindergartenList) {
                 specialInfo.appendChild(li);
             }
 
+            for (let i = 1; i < x.log.length; i++){
+                let li = document.createElement("LI");
+                let text = document.createTextNode(x.log[i]);
+                li.appendChild(text);
+                log_details.appendChild(li);
+            }
+            let log_summary_text = document.createTextNode(x.log[0]);
+            log_summary.appendChild(log_summary_text);
+            log_details.appendChild(log_summary);
+            log.appendChild(log_details);
+
 
             let details = document.createElement("DETAILS");
             let summary = document.createElement("SUMMARY");
@@ -631,15 +645,23 @@ function resultsToHTML(kindergartenList) {
             priority.style.padding = "5px";
             //priority.style.borderColor = "crimson";
             priority.style.borderColor = "#fff600"
+            priority.style.color = "#fff600";
             priority.style.margin = "5px";
 
             specialInfo.style.borderStyle = "solid";
             specialInfo.style.padding = "5px";
             specialInfo.style.margin = "5px";
 
+            log.style.borderStyle = "solid";
+            log.style.padding = "5px";
+            log.style.margin = "5px";
+            log.style.borderColor = "#3808FF"
+            log.style.color = "#3808FF"
+
             details.appendChild(personal);
             details.appendChild(priority);
             details.appendChild(specialInfo);
+            details.appendChild(log);
 
             summary.appendChild(summary_text);
             details.appendChild(summary);
