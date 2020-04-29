@@ -25,7 +25,6 @@ h2{
     flex-direction: column;
 }
 
-
 html::-webkit-scrollbar {
     display: none;
 }
@@ -39,11 +38,6 @@ html{
 
 ul {
     list-style-type: none;
-}
-
-span{
-    background-image: linear-gradient(to right,  #FF6F91, #FF9671);
-    padding: 2px;
 }
 
 button{
@@ -74,25 +68,18 @@ button:hover{
     color: #FF0087;
 }
 
-span{
-    background-image: linear-gradient(to right,  #FF6F91, #FF9671);
-    padding: 2px;
+span:nth-child(1){
+    color: #FFF600;
 }
-
-@media only screen and (max-width: 700px) {
-    html {
-        font-family: 'Roboto', sans-serif;
-        overflow-y: scroll;
-        display: flex;
-        flex-direction: column;
-        padding: 0;
-        color: white;
-
-    }
+span:nth-child(2){
+    color: #FFF600;
 }
-
-
-
+span:nth-child(3){
+    color: #FFF600;
+}
+span:nth-child(4){
+    color: #FFF600;
+}
 
 
 /* NOTE:
