@@ -68,6 +68,13 @@ button:hover{
     box-shadow:  0px 0px 150px 50px #04ff00;
 }
 
+button:focus{
+    /*background-image: linear-gradient(to top,  #9a9ae1, #8aa7ec);*/
+    color:#FFF600;
+    box-shadow:  0px 0px 150px 50px #FFF600;
+}
+
+
 span{
     color: #04ff00;
 }
