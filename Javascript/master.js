@@ -755,17 +755,28 @@ function calculatePriorityMetric(kidList) {
         + rest + " got > 3rd priority. \n"
         + wait + " got waiting list.";
 
-    let reportPercentage = toPercentage(first, matched.length)+ "% got 1st priority.\n"
-        + toPercentage(second,matched.length) + "% got 2nd priority.\n"
-        + toPercentage(third,matched.length) + "% got 3rd priority.\n"
-        + toPercentage(rest,matched.length) + "% got >3rd priority. \n"
-        + toPercentage(wait,matched.length) + "% got waiting list.";
+    let reportPercentage = putInSpan(toPercentage(first, matched.length))+ "% got 1st priority.\n"
+        + putInSpan(toPercentage(second,matched.length)) + "% got 2nd priority. "
+        + putInSpan(toPercentage(third,matched.length)) + "% got 3rd priority. "
+        + putInSpan(toPercentage(rest,matched.length)) + "% got >3rd priority. "
+        + putInSpan(toPercentage(wait,matched.length)) + "% got waiting list. ";
 
-    console.log(reportNumbers); //logs a report in the console with the numbers.
-    console.log(reportPercentage) //logs a report in the console with the percentage.
+    //console.log(reportNumbers); //logs a report in the console with the numbers.
+    //console.log(reportPercentage) //logs a report in the console with the percentage.
+
+    metricsToHTML("Results: " + reportPercentage); //prints results on the HTML-page.
     return [first,second,third,rest,wait]
 }
 
 function toPercentage(n,total) {
     return ((100/total) * n).toFixed(1)
+}
+
+function metricsToHTML(toPrint) {
+    let placement = document.getElementById("results")
+    placement.innerHTML = toPrint;
+}
+
+function putInSpan(text) {
+    return "<span>" + text + "</span>"
 }
