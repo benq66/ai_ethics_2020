@@ -25,19 +25,19 @@
 function Kid(hnd, cs, sib, sibCount, vi, sp, im, district, age, priority, kindergartenList, id_tall) {
     this.values ={};
     if (hnd === true){
-        this.values.handicaped = 1;
+        this.values.handicaped = 10;
     }
     if (cs === true){
-        this.values.childServices = 1;
+        this.values.childServices = 10;
     }
     if (vi === true){
-        this.values.childOfVisuallyImpared = 1;
+        this.values.childOfVisuallyImpared = 10;
     }
     if (sp === true){
-        this.values.singleParent = 1;
+        this.values.singleParent = 10;
     }
     if (im === true){
-        this.values.childOfImmigrants = 1;
+        this.values.childOfImmigrants = 10;
     }
     this.siblingsKG = sib;
     this.siblingsCount = sibCount;
