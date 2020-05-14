@@ -1,10 +1,5 @@
-//TODO: Add functionality so that a kid can be the child of a kindergarten employee.
 //TODO: Improve algorithm efficiency.
-//DONE: Add functionality that tracks how many times a child has been reassigned by the algorithm (give the Kid object a property)
-//DONE: Add functionality that tells what priority kindergarten the child got (match this.kindergarten.name to priority list and ge the index)
 //TODO: Look into splitting up the code into different files.
-//Done(?): Change the score system -> district needs to weigh higher i think.
-//TODO: Make the kindergarten list (on HTML page) collapsable.
 //TODO: Change priority functionality so the children only need to prioritize three kindergartens. (OPTIONAL)
 /**
  * Represents a kid.
@@ -22,25 +17,27 @@
  * @param id_tall {number} id - A number which becomes the unique id of the child in this system.
  * @constructor
  */
-function Kid(hnd, cs, sib, sibCount, vi, sp, im, district, age, priority, kindergartenList, id_tall) {
+function Kid(hnd, cs, sib, sibCount, vi, sp, im, district, age, priority, kindergartenList, id_tall, childOfEmployedBool) {
     this.values ={};
     if (hnd === true){
-        this.values.handicaped = 10;
+        this.values.handicaped = 25;
     }
     if (cs === true){
-        this.values.childServices = 10;
+        this.values.childServices = 25;
     }
     if (vi === true){
-        this.values.childOfVisuallyImpared = 10;
+        this.values.childOfVisuallyImpared = 25;
     }
     if (sp === true){
-        this.values.singleParent = 10;
+        this.values.singleParent = 25;
     }
     if (im === true){
-        this.values.childOfImmigrants = 10;
+        this.values.childOfImmigrants = 25;
     }
     this.siblingsKG = sib;
     this.siblingsCount = sibCount;
+    this.childOfEmployedKG = undefined;
+    this.childOfEmployedBool = childOfEmployedBool;
     this.district = district;
     this.age = age;
     this.priority_text = priority;
@@ -79,6 +76,9 @@ function report(x) {
     if (x.values.childOfImmigrants){
         reportArray.push("Child of immigrants.");
     }
+    if (x.childOfEmployedKG){
+        reportArray.push("Child of employed")
+    }
     return reportArray
 }
 
@@ -111,17 +111,22 @@ function kidScore(x) {
         let districtScore = 0;
         let ageScore = x.age;
         let siblingScore = 0;
+        let ofemployed = 0;
         for (let v in x.values){
             valueScore += x.values[v];
         }
         if (x.district === x.priority[u].district){
-            districtScore += 3
+            districtScore += 6
         }
-        for (let h in x.siblingsKG){
-            if (x.siblingsKG[h] === x.priority[u].name){
-                siblingScore += 1
+
+        if(x.childOfEmployedKG === x.priority[u].district){
+            ofemployed += 12;
+        }
+        //for (let h in x.siblingsKG){
+            if (x.siblingsKG === x.priority[u].name){
+                siblingScore += 12
             }
-        }
+        //}
         scoreList.push(valueScore + districtScore + ageScore + siblingScore)
     }
     return scoreList
@@ -182,7 +187,7 @@ function waitingList(rest) {
  */
 function kidGenerator(limit, kindergartenList) {
     let sample = [];
-    let bool = [true, false, false, false, false, false, false, false, false, false];
+    let bool = [true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
     let districts = getUniquesFromList(kindergartenList, "district");
 
     for (let i = 0; i < limit ; i++) {
@@ -190,15 +195,19 @@ function kidGenerator(limit, kindergartenList) {
         let length = priorities.length;
         sample.push(
             new Kid(
-                bool[randomInt(9)],
-                bool[randomInt(9)],
+                bool[randomInt(20)],
+                bool[randomInt(20)],
                 [],
                 randomInt(3),
-                bool[randomInt(9)],
-                bool[randomInt(9)],
-                bool[randomInt(9)],
+                bool[randomInt(20)],
+                bool[randomInt(20)],
+                bool[randomInt(20)],
                 districts[randomInt(districts.length)],
-                randomInt(6),[], kindergartenList, i
+                randomInt(6),
+                [],
+                kindergartenList,
+                i,
+                bool[randomInt(20)]
             ));
         for (let j = 0; j < length; j++) {
             let random = randomInt(priorities.length);
@@ -209,6 +218,11 @@ function kidGenerator(limit, kindergartenList) {
         for (let k = 0; k < sample[i].siblingsCount; k++) {
             let random = randomInt(sample[i].priority_text.length);
             sample[i].siblingsKG.push(sample[i].priority_text[random]);
+        }
+
+        if (sample[i].childOfEmployedBool === true){
+            let random = randomInt(sample[i].priority_text.length);
+            sample[i].childOfEmployedKG = sample[i].priority_text[random]
         }
         sample[i].getPriority();
         sample[i].calculateScore();
@@ -781,4 +795,10 @@ function metricsToHTML(toPrint) {
 
 function putInSpan(text) {
     return "<span>" + text + "%" + "</span>"
+}
+
+function temp(){
+    for(let x in matched){
+        console.log(matched[x].childOfEmployedKG)
+    }
 }
